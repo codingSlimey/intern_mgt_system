@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum Department {
+  DEPARTMENT1
+  DEPARTMENT2
+  DEPARTMENT3
+}
+
+model User {
+  id                    Int                     @id @default(autoincrement())
+  studentNumber         Int
+  postalAddr            Int
+  firstname             String                  @db.VarChar(255)
+  lastname              String                  @db.VarChar(255)
+  email                 String    
+  phone                 String
+  applications          Application[]
+  role                  Role                    @default(user)
+  hashedPassword        String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt            
+  hashedRT              String?
+  lastLoggedInTime      DateTime?
+}
+
+model Superviser {
+  id                    Int                     @id @default(autoincrement())
+  firstname             String                  @db.VarChar(255)
+  lastname              String                  @db.VarChar(255)
+  email                 String    
+  phone                 String
+  position              String
+  companyId             Int
+  company               Company                 @relation(fields:[companyId], references:[id])
+  hashedPassword        String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt            
+  hashedRT              String?
+  lastLoggedInTime      DateTime?
+}
+
+model Coordinator {
+  id                    Int                     @id @default(autoincrement())
+  firstname             String                  @db.VarChar(255)
+  lastname              String                  @db.VarChar(255)
+  email                 String    
+  phone                 String
+  department            Department
+  hashedPassword        String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt            
+  hashedRT              String?
+  lastLoggedInTime      DateTime?
+}
+
+
+model Application {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  userId                Int                     
+  user                  User                    @relation(fields:[userId], references:[id])
+}
+
+model Company {
+  id                    Int                     @id @default(autoincrement())
+  workingFields         String[]
+  postalAddr            Int
+  fax                   Int?        
+  telephoneNumber       String
+  email                 String
+  webAddr               String
+  description           String
+  superviser            Superviser[]
+}
+
+model Verification {
+  id                    Int                     @id @default(autoincrement())
+  email                 String                  @unique
+  try                   Int                     @default(0)
+  code                  String
+  lastResendTime        DateTime
+}
+
+model File {
+  id                    Int                     @id @default(autoincrement())
+  title                 String
+  description           String
+  fileName              String
+  isVerified            Boolean                 @default(false)
+  productId             Int               
+  createdAt             DateTime
+  updatedAt             DateTime
+  size                  Int                     @default(0)
+  type                  String                  @default("")
+}
