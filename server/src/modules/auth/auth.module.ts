@@ -3,7 +3,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/at.strategy';
 import { RefreshTokenStrategy } from './strategies/rt.strategy';
-import { UserRepository } from '../users/users.repository';
+import { StudentRepository } from '../student/student.repository';
 import { MailService } from '../mail/mail.service';
 import { OtpService } from './otp.service';
 import { AuthRepository } from './auth.repository';
@@ -22,12 +22,12 @@ import { MailModule } from '../mail/mail.module';
     AuthRepository,
     JwtStrategy, 
     RefreshTokenStrategy, 
-    UserRepository, 
+    StudentRepository, 
     MailService,
     OtpService,
     JwtService,
     PrismaService,
   ],
-  exports: [UserRepository, PrismaService],
+  exports: [StudentRepository, PrismaService],
 })
 export class AuthModule {}

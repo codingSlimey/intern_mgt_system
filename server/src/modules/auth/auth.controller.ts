@@ -46,7 +46,7 @@ export class AuthController {
     const cookieOptions: CookieOptions = {
       maxAge,
       httpOnly: true,
-      domain: process.env.NODE_ENV === 'production' ? '.cookiefoo.ir' : '',
+      domain: process.env.NODE_ENV === 'production' ? '.emu.edu.tr' : '',
       secure: process.env.NODE_ENV === 'production' ? true : false,
       sameSite: process.env.NODE_ENV === 'production' ? 'lax' : false,
     };
@@ -56,6 +56,7 @@ export class AuthController {
   @Public()
   @Post('signup')
   async signup(
+    @Param('userType') userType: string,
     @Body() signUpDto: SignUpDto,
     @Res({ passthrough: true }) res: Response,
     ) {
@@ -80,7 +81,7 @@ export class AuthController {
   @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() loginDto: LoginDto, @Req() req: Request, @Res() res: Response) {
+  async login(@Param('userType') userType: string, @Body() loginDto: LoginDto, @Req() req: Request, @Res() res: Response) {
     const tokens = await this.authService.login(loginDto);
     
     this.setCookie(res, 'access_token', tokens.accessToken, this.atExp);
