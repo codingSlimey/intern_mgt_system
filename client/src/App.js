@@ -11,6 +11,7 @@ import ViewLog from "./pages/logbook/ViewLog";
 import StuProfile from "./pages/profile/student/StuProfile";
 import CoodProfile from "./pages/profile/staff/CoodProfile";
 import SupervisorProfile from "./pages/profile/staff/SupervisorProfile";
+import CoordinatorDash from "./pages/dashboard/COORDINATOR/CoordinatorDash";
 
 function App() {
 	return (
@@ -49,6 +50,9 @@ function App() {
 						path="/supervisor/profile"
 						element={<SupervisorProfile />}
 					/>
+					<Route 
+						path="/coordinator/dashboard" 
+						element={<CoordinatorDash />} />
 				</Routes>
 			</Router>
 		</>
