@@ -23,57 +23,56 @@ enum Department {
 
 model User {
   id                    Int                     @id @default(autoincrement())
-  studentNumber         Int
-  postalAddr            Int
   firstname             String                  @db.VarChar(255)
   lastname              String                  @db.VarChar(255)
   email                 String    
-  phone                 String
-  applications          Application[]
   role                  Role                    @default(user)
   hashedPassword        String
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt            
   hashedRT              String?
   lastLoggedInTime      DateTime?
+  phone                 String?
+  image                 Image?
+  student               Student?
+  coordinator           Coordinator?
+  supervisor            Superviser?
+}
+
+
+model Student {
+  id                    Int                     @id @default(autoincrement())
+  userId                Int                     @unique
+  studentNumber         Int
+  postalAddr            Int
+  applications          Application[]          
+  user                  User                    @relation(fields: [userId], references: [id])
 }
 
 model Superviser {
   id                    Int                     @id @default(autoincrement())
-  firstname             String                  @db.VarChar(255)
-  lastname              String                  @db.VarChar(255)
-  email                 String    
-  phone                 String
+  userId                Int                     @unique
   position              String
   companyId             Int
   company               Company                 @relation(fields:[companyId], references:[id])
-  hashedPassword        String
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt            
-  hashedRT              String?
-  lastLoggedInTime      DateTime?
+  user                  User                    @relation(fields: [userId], references: [id])
 }
 
 model Coordinator {
   id                    Int                     @id @default(autoincrement())
-  firstname             String                  @db.VarChar(255)
-  lastname              String                  @db.VarChar(255)
-  email                 String    
-  phone                 String
+  userId                Int                     @unique
   department            Department
-  hashedPassword        String
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt            
-  hashedRT              String?
-  lastLoggedInTime      DateTime?
+  user                  User                    @relation(fields: [userId], references: [id])
 }
 
 
 model Application {
   id                    Int                     @id @default(autoincrement())
+  studentId             Int                     @unique
+  resumeId              Int                     @unique
   name                  String
-  userId                Int                     
-  user                  User                    @relation(fields:[userId], references:[id])
+  resume                Resume                  @relation(fields: [resumeId], references: [id])
+  student               Student                 @relation(fields:[studentId], references:[id])
 }
 
 model Company {
@@ -96,15 +95,20 @@ model Verification {
   lastResendTime        DateTime
 }
 
-model File {
+model Image {
   id                    Int                     @id @default(autoincrement())
-  title                 String
-  description           String
-  fileName              String
+  url                   String
+  userId                Int                     @unique
   isVerified            Boolean                 @default(false)
-  productId             Int               
   createdAt             DateTime
   updatedAt             DateTime
   size                  Int                     @default(0)
   type                  String                  @default("")
+  user                  User                    @relation(fields: [userId], references: [id])
+}
+
+model Resume {
+  id                    Int                     @id @default(autoincrement())
+  url                   String
+  application           Application?           
 }
