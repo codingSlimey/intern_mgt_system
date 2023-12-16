@@ -1,17 +1,14 @@
 import React from "react";
 import styles from "../STUDENT/styles.module.css";
-import SideBar from "../../../components/ELEMENTS/Nav/SideBar";
-import Navbar from "../../../components/ELEMENTS/Nav/Navbar";
-import Resource from "../../../components/CONTAINERS/Resource Library/Resource";
 import Header from "../../../components/ELEMENTS/Header/Header";
-import { useTranslation } from "react-i18next";
 import CoordinatorLayout from "../../../layout/coordinator/layout";
+import CustomizedTables from "../../../components/ELEMENTS/Table/Table";
 
 const CoordinatorDash = () => {
   return (
     <CoordinatorLayout>
       <div className="grid grid-cols-5 p-5">
-        <div className="col-span-3 flex flex-col">
+        <div className="col-span-3 flex flex-col gap-3">
           <Header
             text={"Overview"}
             fontSize={"20px"}
@@ -24,6 +21,7 @@ const CoordinatorDash = () => {
             fontWeight={"900"}
             color={"#003976"}
           />
+          <CustomizedTables />
         </div>
         <div className="col-span-2">
           <section className={styles.calendar}></section>

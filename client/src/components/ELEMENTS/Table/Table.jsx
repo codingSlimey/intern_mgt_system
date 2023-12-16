@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { TableFooter, TablePagination } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,6 +29,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const StyledTableHeadRow = styled(TableRow)(({ theme }) => ({
+  "& .MuiTableCell-root.MuiTableCell-head": {
+    color: "white",
+    backgroundColor: "#003976",
+  },
+}));
+
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
@@ -41,32 +49,46 @@ const rows = [
 ];
 
 export default function CustomizedTables() {
+  const [isResult, setIsResult] = React.useState(5);
+  const handleResultChange = (e) => {
+    setIsResult(e.target.value);
+  };
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className="flex flex-col items-end">
+      <select
+        id=""
+        onChange={handleResultChange}
+        className="bg-white border-2 border-black-200 py-2 px-4 text-[#003976]">
+        <option value={5}>5 results</option>
+        <option value={10}>10 results</option>
+        <option value={15}>15 results</option>
+      </select>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table" op>
+          <TableHead>
+            <StyledTableHeadRow>
+              <StyledTableCell>Dessert (100g serving)</StyledTableCell>
+              <StyledTableCell align="right">Calories</StyledTableCell>
+              <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
+              <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
+              <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            </StyledTableHeadRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row.name}>
+                <StyledTableCell component="th" scope="row">
+                  {row.name}
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.calories}</StyledTableCell>
+                <StyledTableCell align="right">{row.fat}</StyledTableCell>
+                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+                <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
