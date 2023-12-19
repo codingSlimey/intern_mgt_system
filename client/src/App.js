@@ -11,6 +11,10 @@ import ViewLog from "./pages/logbook/ViewLog";
 import StuProfile from "./pages/profile/student/StuProfile";
 import CoodProfile from "./pages/profile/staff/CoodProfile";
 import SupervisorProfile from "./pages/profile/staff/SupervisorProfile";
+import StudAnnouncements from "./pages/announcements/student/StudAnnouncements";
+import StuApplicationForm from "./pages/application/student/StuApplicationForm";
+import Internship from "./pages/internships/student/Internship";
+import Internships from "./pages/internships/student/Internships";
 
 function App() {
 	return (
@@ -20,7 +24,10 @@ function App() {
 					<Route path="/student/login" element={<StudentLogin />} />
 					<Route path="/student/signup" element={<StudentSignup />} />
 					<Route path="/staff/login" element={<StaffLogin />} />
-					<Route path="/staff/signup" element={<StaffSignup />} />
+					<Route
+						path="/supervisor/signup"
+						element={<StaffSignup />}
+					/>
 					<Route path="/student/profile" element={<StuProfile />} />
 					<Route
 						path="/signup/successful"
@@ -48,6 +55,18 @@ function App() {
 					<Route
 						path="/supervisor/profile"
 						element={<SupervisorProfile />}
+					/>
+					<Route
+						path="/student/announcements"
+						element={<StudAnnouncements />}
+					/>
+					<Route
+						path="/student/internships/"
+						element={<Internships />}
+					/>
+					<Route
+						path="/student/internship/application-form"
+						element={<StuApplicationForm />}
 					/>
 				</Routes>
 			</Router>
