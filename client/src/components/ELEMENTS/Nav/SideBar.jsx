@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles.module.css'
 import Image from '../Image/Image'
 import { Link, useLocation } from 'react-router-dom'
-import { FiEdit3 } from 'react-icons/fi'
+import { FaChalkboardTeacher } from "react-icons/fa";
 import { TbNotes } from 'react-icons/tb'
 import { FaRegUser } from 'react-icons/fa'
 import { CiSettings } from 'react-icons/ci'
@@ -35,7 +35,7 @@ const SideBar = () => {
         <div className='navDiv'>
             <Link to={'/student/dashboard'} className={styles.link}><BiSolidDashboard style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.home")}</Link>
             <Link to={'/student/profile'} className={styles.link}><FaRegUser style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.prof")}</Link>
-            <Link className={styles.link}><FiEdit3 style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.applications")}</Link>
+            <Link to={'/student/internships'} className={styles.link}><FaChalkboardTeacher style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.internships")}</Link>
             <Link to={'/student/logbook'} className={styles.link}><TbNotes style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.logbook")}</Link>
             <Link className={styles.link}><TbNotes style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.docs")}</Link>
             <Link className={styles.link}><MdInsertChartOutlined style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.reports")}</Link>

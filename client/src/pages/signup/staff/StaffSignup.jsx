@@ -9,6 +9,7 @@ const StaffSignup = () => {
     const [user, setUser] = useState({
         fname: '',
         lname: '',
+        dept: '',
         email: '',
         password: '',
         confPwd: '',
@@ -53,6 +54,9 @@ const StaffSignup = () => {
 
                 <label htmlFor={'lname'}>Last Name:</label>
                 <input type={'text'} name={'lname'} value={user.lname} onChange={handleChange} placeholder={'Last Name'} className={styles.inp} />
+
+                <label htmlFor={'dept'}>Deparment:</label>
+                <input type={'text'} name={'dept'} value={user.dept} onChange={handleChange} placeholder={'Department'} className={styles.inp} />
 
                 <label htmlFor={'email'}>Email:</label>
                 <input type={'email'} name={'email'} value={user.email} onChange={handleChange} placeholder={'Email'} className={styles.inp} />

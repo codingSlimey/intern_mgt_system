@@ -11,7 +11,7 @@
     "sidebar" : {
         "home" : "Gösterge Paneli",
         "prof" : "Profil",
-        "training" : "Eğitim",
+        "internships" : "Stajlar",
         "applications" : "Başvuru",
         "logbook" : "Seyir defteri",
         "docs": "Belgeler",
@@ -20,7 +20,9 @@
     },
     "main" : {
         "message" : "Seyir Defteri Girişleri",
-        "typeWelcome" : "Bir hesap türü seçin."
+        "typeWelcome" : "Bir hesap türü seçin.",
+        "form" : "Formu",
+        "info" : "Bilgi"
     }, 
     "calendar" : {
         "cal" : "Takvim",
@@ -100,7 +102,23 @@
         "edit" : "Profili Düzenle",
         "success" : "Kullanici Profili başariyla güncellendi",
         "imgWarning" : "Büyük resimler otomatik olarak yeniden boyutlandirilabilir. Maksimum yükleme boyutu 1 MB'tir"
+    },
+    "application" : {
+        "form" : "Basvuru Formu",
+        "stuInfo" : "Ogrenci Bilgi",
+        "tel" : "Telephon",
+        "dur" : "Süre",
+        "submit" : "Başvuruyu Gönder",
+        "trncStu" : "KKTC/Türkiye'deki şirketlere başvuran öğrencilerin bu ülkelerin mevzuatlarına göre başvuru formuyla birlikte Sosyal Sigorta Formunu da doldurup göndermeleri gerekmektedir."
+    },
+    "internships" : {
+        "apply" : "Uygula",
+        "intInfo" : "Staj Bilgileri",
+        "company" : "Şirket",
+        "role" : "Rol",
+        "desc" : "Tanim"
     }
+
 
 
 

@@ -11,7 +11,7 @@
     "sidebar" : {
         "home" : "Overview",
         "prof" : "Profile",
-        "training" : "Training",
+        "internships" : "Internships",
         "applications" : "Application",
         "logbook" : "Logbook",
         "docs": "Documents",
@@ -20,7 +20,9 @@
     },
     "main" : {
         "message" : "Logbook Entries",
-        "typeWelcome" : "Select account type"
+        "typeWelcome" : "Select account type",
+        "form" : "Form",
+        "info" : "Information"
     }, 
     "calendar" : {
         "cal" : "Calendar",
@@ -101,6 +103,21 @@
         "edit" : "Edit Profile",
         "success" : "Profile updated successfully",
         "imgWarning" : "Large images my be resized automatically. Maximum upload size is 1MB"
+    },
+    "application" : {
+        "form" : "Application Form",
+        "stuInfo" : "Student Information",
+        "tel" : "Telephone/Mobile", 
+        "dur" : "Duration",
+        "submit" : "Submit Application",
+        "trncStu" : "Students applying to companies in TRNC/Turkey are required to fill and submit the Social Insurance Form along with the application form according to the regulations of these countries."
+    },
+    "internships" : {
+        "apply" : "Apply",
+        "intInfo" : "Internship Information",
+        "company" : "Company",
+        "role" : "Role",
+        "desc" : "Description"
     }
 
 }

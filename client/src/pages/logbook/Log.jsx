@@ -4,6 +4,7 @@ import Paragraph from '../../components/ELEMENTS/Paragraph/Paragraph';
 import HeaderTwo from '../../components/ELEMENTS/Header/HeaderTwo';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Header from '../../components/ELEMENTS/Header/Header';
 
 const Log = () => {
 
