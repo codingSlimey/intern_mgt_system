@@ -17,7 +17,7 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
 import { CookieOptions } from 'express';
 import { Response, Request } from 'express';
-import { UserInit } from './types';
+import { UserInit, UserType } from './types';
 import {
   GetCurrentUser,
   Public,
@@ -26,10 +26,16 @@ import {
   ForgetPasswordDto,
   ResetPasswordtDto,
 } from './dtos/forget-password.dto';
-import { SignUpDto, VerificationDto } from './dtos/signup.dto';
+import { 
+  CoordinatorSignUpDto, 
+  StudentSignUpDto, 
+  SuperviserSignUpDto, 
+  VerificationDto 
+} from './dtos/signup.dto';
 import { ValidateOtpDto } from './dtos/validate-otp.dto';
 import { GetCurrentUserId } from '../../common/decorators/'
 import { TokenInterceptor } from '../../common/interceptors/token.interceptor';
+
 
 @Controller('auth')
 export class AuthController {
@@ -56,8 +62,7 @@ export class AuthController {
   @Public()
   @Post('signup')
   async signup(
-    @Param('userType') userType: string,
-    @Body() signUpDto: SignUpDto,
+    @Body() signUpDto: StudentSignUpDto|CoordinatorSignUpDto|SuperviserSignUpDto,
     @Res({ passthrough: true }) res: Response,
     ) {
     const tokens = await this.authService.signUp(signUpDto);
@@ -81,8 +86,8 @@ export class AuthController {
   @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Param('userType') userType: string, @Body() loginDto: LoginDto, @Req() req: Request, @Res() res: Response) {
-    const tokens = await this.authService.login(loginDto);
+  async login(@Param('userType') userType: UserType, @Body() loginDto: LoginDto, @Req() req: Request, @Res() res: Response) {
+    const tokens = await this.authService.login(userType, loginDto);
     
     this.setCookie(res, 'access_token', tokens.accessToken, this.atExp);
     this.setCookie(res, 'refresh_token', tokens.refreshToken, this.rtExp);
@@ -111,8 +116,11 @@ export class AuthController {
   @Public()
   @Post('send-code')
   @HttpCode(HttpStatus.CREATED)
-  async sendCode(@Body() verificationDto: VerificationDto) {
-    return await this.authService.sendCode(verificationDto);
+  async sendCode(
+    @Body() requestBody: { userType: UserType; verificationDto: VerificationDto }
+  ) {
+    const { userType, verificationDto } = requestBody;
+    return await this.authService.sendCode(userType, verificationDto);
   }
 
   @Public()

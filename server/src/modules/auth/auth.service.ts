@@ -6,31 +6,53 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginDto } from './dtos/login.dto';
-import { UserRepository } from '../users/users.repository';
+import { StudentRepository } from '../student/student.repository';
 import { Hash } from '../../common/utils/hash.util';
 // import { User } from '@prisma/client';
-import { JwtPayload, Tokens } from './types';
+import { JwtPayload, Tokens, UserType } from './types';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpDto, VerificationDto } from './dtos/signup.dto';
+import { 
+  SuperviserSignUpDto, 
+  CoordinatorSignUpDto, 
+  StudentSignUpDto, 
+  VerificationDto 
+} from './dtos/signup.dto';
 import { AuthRepository } from './auth.repository';
 import { OtpService } from './otp.service';
 import { MailService } from '../mail/mail.service';
 import { TokenExpiredError } from 'jsonwebtoken';
-import { Verification } from '@prisma/client';
+import { Department, Verification } from '@prisma/client';
+import { CoordinatorRepository } from '../coordinator/coordinator.repository';
+import { SuperviserRepository } from '../superviser/superviser.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly studentRepository: StudentRepository,
+    private readonly coordinatorRepository: CoordinatorRepository,
+    private readonly superviserRepository: SuperviserRepository,
     private readonly jwtService: JwtService,
     private readonly authRepository: AuthRepository,
     private readonly otp: OtpService,
     private readonly mailService: MailService,
   ) {}
 
-  async login(loginUser: LoginDto) {
-    const user = await this.userRepository.find(loginUser.email);
+  async login(userType: UserType, loginUser: LoginDto) {
+    
+    let user;
 
+    if (userType == UserType.Student){
+      user = await this.studentRepository.find(loginUser.email);
+    }
+    else if (userType == UserType.Coordinator){
+      user = await this.coordinatorRepository.find(loginUser.email);
+    }
+    else if (userType == UserType.Superviser){
+      user = await this.superviserRepository.find(loginUser.email);
+    }
+    else {
+      throw new BadRequestException('Invalid user type');
+    }
     if (!user) {
       throw new BadRequestException('Email does not exist');
     }
@@ -45,7 +67,7 @@ export class AuthService {
     const userData = {
       sub: user.id,
       role: user.role,
-      name: user.name,
+      email: user.email,
     } 
     
     return await this.getTokens(userData);
@@ -71,6 +93,7 @@ export class AuthService {
     return { accessToken: accessToken, refreshToken: refreshToken };
   }
 
+
   async signToken(
     payload: JwtPayload,
     secretKey: string,
@@ -83,7 +106,7 @@ export class AuthService {
   }
 
   async logout(userId: number): Promise<boolean> {
-    return await this.userRepository.logout(userId);
+    return await this.studentRepository.logout(userId);
   }
 
   async updateRefreshTokenHash(
@@ -92,11 +115,11 @@ export class AuthService {
   ): Promise<void> {
     const hashedRefreshToken: string = await Hash.hash(refresh_token);
 
-    await this.userRepository.updateRefreshTokenHash(sub, hashedRefreshToken);
+    await this.studentRepository.updateRefreshTokenHash(sub, hashedRefreshToken);
   }
 
   async refreshTokens(userId: number, refreshToken: string): Promise<Tokens> {
-    const user = await this.userRepository.findById(userId);
+    const user = await this.studentRepository.findById(userId);
 
     if (!user || !user.hashedRT) throw new ForbiddenException('Access Denied');
 
@@ -106,12 +129,12 @@ export class AuthService {
     return await this.getTokens({
       sub: user.id,
       role: user.role,
-      name: user.name,
+      email: user.email,
     });
   }
 
-  async sendCode(verificationDto: VerificationDto) {
-    await this.validateEmailForSignUp(verificationDto.email);
+  async sendCode(userType: UserType, verificationDto: VerificationDto) {
+    await this.validateEmailForSignUp(userType, verificationDto.email);
     const varification = await this.authRepository.findVerification(
       verificationDto.email,
     );
@@ -133,7 +156,7 @@ export class AuthService {
   }
 
   async updatePassword(password: string, id: number, token: string) {
-    const user = await this.userRepository.findById(id);
+    const user = await this.studentRepository.findById(id);
     
     if (!user) {
       throw new BadRequestException('user not found');
@@ -145,7 +168,7 @@ export class AuthService {
       await this.jwtService.verify(token, { secret: secret });
       const hashedPassword = await Hash.hash(password);
 
-      await this.userRepository.updatePassword(id, hashedPassword);
+      await this.studentRepository.updatePassword(id, hashedPassword);
 
       return { success: true };
     } catch (error) {
@@ -160,7 +183,7 @@ export class AuthService {
   }
 
   async validateResetPasswordToken(id: number, token: string) {
-    const user = await this.userRepository.findById(id);
+    const user = await this.studentRepository.findById(id);
 
     if (!user) {
       throw new BadRequestException('user not found');
@@ -175,8 +198,20 @@ export class AuthService {
     }
   }
 
-  async validateEmailForSignUp(email: string): Promise<boolean | undefined> {
-    const user = await this.userRepository.find(email);
+  async validateEmailForSignUp(userType: UserType, email: string): Promise<boolean | undefined> {
+    let user;
+    if (userType == UserType.Student) {
+      user = await this.studentRepository.find(email);
+    } 
+    else if (userType == UserType.Coordinator) {
+      user = await this.coordinatorRepository.find(email);
+    }
+    else if (userType == UserType.Superviser) {
+      user = await this.superviserRepository.find(email);
+    }
+    else {
+      throw new BadRequestException('Invalid user type')
+    }
 
     if (user) {
       throw new HttpException('email already exists', 400);
@@ -185,7 +220,7 @@ export class AuthService {
   }
 
   async generateUniqueLink(email: string) {
-    const user = await this.userRepository.find(email);
+    const user = await this.studentRepository.find(email);
 
     if (!user) {
       throw new BadRequestException('user not found');
@@ -195,13 +230,13 @@ export class AuthService {
     const jwtPayload: JwtPayload = {
       sub: user.id,
       role: user.role,
-      name: user.name,
+      email: user.email,
     };
     const token = await this.jwtService.sign(jwtPayload, {
       secret: secret,
       expiresIn: '15m',
     });
-    const link = `https://cookiefoo.ir/new-password/${user.id}/${token}`;
+    const link = `https://emu.edu.tr/new-password/${user.id}/${token}`;
     await this.mailService.forgetPassword(link, email);
 
     return { sucess: true };
@@ -220,25 +255,58 @@ export class AuthService {
     return true;
   }
 
-  async signUp(signUPDto: SignUpDto): Promise<Tokens> {
+  async signUp(signUPDto: SuperviserSignUpDto | CoordinatorSignUpDto | StudentSignUpDto): Promise<Tokens> {
     const isEmailVerified = await this.validateVerifications(signUPDto.email, signUPDto.otp);
     if (!isEmailVerified) {
        throw new UnauthorizedException('email is not verified')
     } 
-    const res = await this.validateEmailForSignUp(signUPDto.email);
+    const res = await this.validateEmailForSignUp(signUPDto.userType, signUPDto.email);
     const hashedPassword = await Hash.hash(signUPDto.password);
 
-    const user = await this.userRepository.create({
-      email: signUPDto.email,
-      name: signUPDto.name,
-      phone: signUPDto.phone,
-      hashedPassword: hashedPassword,
-    });
+    if (!res) throw new UnauthorizedException('Email is not validated yet');
+    
+    let user;
+
+    if (signUPDto.userType == UserType.Student) {
+      const studentSignUpDto = signUPDto as StudentSignUpDto;
+      user = await this.studentRepository.create({
+        email: studentSignUpDto.email,
+        phone: studentSignUpDto.phone,
+        studentNo: studentSignUpDto.studentNumber,
+        firstname: studentSignUpDto.firstname,
+        lastname: studentSignUpDto.lastname,
+        hashedPassword: hashedPassword,
+        // role: signUPDto.role,
+      });
+    }
+    else if (signUPDto.userType == UserType.Coordinator) {
+      const studentSignUpDto = signUPDto as CoordinatorSignUpDto;
+      user = await this.coordinatorRepository.create({
+        email: studentSignUpDto.email,
+        phone: studentSignUpDto.phone,
+        department: studentSignUpDto.department as Department,
+        firstname: studentSignUpDto.firstname,
+        lastname: studentSignUpDto.lastname,
+        hashedPassword: hashedPassword,
+      });
+    }
+    else {
+      const studentSignUpDto = signUPDto as SuperviserSignUpDto;
+      user = await this.superviserRepository.create({
+        email: studentSignUpDto.email,
+        phone: studentSignUpDto.phone,
+        position: studentSignUpDto.position,
+        companyId: studentSignUpDto.companyId,
+        firstname: studentSignUpDto.firstname,
+        lastname: studentSignUpDto.lastname,
+        hashedPassword: hashedPassword,
+      });
+    }
 
     return await this.getTokens({
       sub: user.id,
       role: user.role,
-      name: user.name,
+      email: user.email,
     });
   }
 }

@@ -37,7 +37,7 @@ export class RefreshTokenStrategy extends PassportStrategy(
 
     return {
       sub: payload.sub,
-      name: payload.name,
+      email: payload.email,
       role: payload.role,
       refreshToken,
     };

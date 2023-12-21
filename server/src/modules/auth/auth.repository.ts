@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Verification } from '@prisma/client';
+import { Verification, User } from '@prisma/client';
 import { VerificationDto } from './dtos/signup.dto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AuthRepository {
   constructor(private readonly prismaService: PrismaService) {}
+
 
   findVerification(email: string): Promise<Verification | undefined> {
     return this.prismaService.verification.findFirst({ where: { email } });
