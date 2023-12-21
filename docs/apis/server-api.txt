@@ -1,0 +1,37 @@
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [NestFactory] Starting Nest application...
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] AppModule dependencies initialized +15ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] MailerModule dependencies initialized +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] PrismaModule dependencies initialized +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] JwtModule dependencies initialized +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] ApplicationModule dependencies initialized +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] CompanyModule dependencies initialized +0ms
+[2023-12-21 16:06:43] DEBUG Creating transport: nodemailer (6.9.7; +https://nodemailer.com/; SMTP/6.9.7[client:6.9.7])
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] MailerCoreModule dependencies initialized +2ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] MailModule dependencies initialized +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] StudentModule dependencies initialized +1ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] CoordinatorModule dependencies initialized +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] SuperviserModule dependencies initialized +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [InstanceLoader] AuthModule dependencies initialized +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RoutesResolver] AuthController {/auth}: +5ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth/signup, POST} route +1ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth/login, POST} route +1ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth/logout, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth/send-code, POST} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth/refresh, GET} route +1ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth/forget-password, POST} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth/reset-password/:id/:token, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/auth/reset-password/:id/:token, POST} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RoutesResolver] StudentController {/student}: +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/student/example, GET} route +1ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/student/all, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/student/:id, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RoutesResolver] CoordinatorController {/coordinator}: +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/coordinator/all, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/coordinator/:id, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RoutesResolver] SuperviserController {/superviser}: +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/superviser/all, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RouterExplorer] Mapped {/superviser/:id, GET} route +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RoutesResolver] ApplicationController {/application}: +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [RoutesResolver] CompanyController {/company}: +0ms
+[Nest] 40221  - 12/21/2023, 6:06:43 PM     LOG [NestApplication] Nest application successfully started +288ms
