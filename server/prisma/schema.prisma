@@ -25,7 +25,7 @@ model User {
   id                    Int                     @id @default(autoincrement())
   firstname             String                  @db.VarChar(255)
   lastname              String                  @db.VarChar(255)
-  email                 String    
+  email                 String                  @unique @db.VarChar(255)
   role                  Role                    @default(user)
   hashedPassword        String
   createdAt             DateTime                @default(now())
@@ -43,8 +43,8 @@ model User {
 model Student {
   id                    Int                     @id @default(autoincrement())
   userId                Int                     @unique
+  email                 String                  @unique
   studentNumber         Int
-  postalAddr            Int
   applications          Application[]          
   user                  User                    @relation(fields: [userId], references: [id])
 }
@@ -52,6 +52,7 @@ model Student {
 model Superviser {
   id                    Int                     @id @default(autoincrement())
   userId                Int                     @unique
+  email                 String                  @unique
   position              String
   companyId             Int
   company               Company                 @relation(fields:[companyId], references:[id])
@@ -61,6 +62,7 @@ model Superviser {
 model Coordinator {
   id                    Int                     @id @default(autoincrement())
   userId                Int                     @unique
+  email                 String                  @unique
   department            Department
   user                  User                    @relation(fields: [userId], references: [id])
 }
@@ -71,6 +73,8 @@ model Application {
   studentId             Int                     @unique
   resumeId              Int                     @unique
   name                  String
+  days                  Int
+  insurance             Image?
   resume                Resume                  @relation(fields: [resumeId], references: [id])
   student               Student                 @relation(fields:[studentId], references:[id])
 }
@@ -99,12 +103,14 @@ model Image {
   id                    Int                     @id @default(autoincrement())
   url                   String
   userId                Int                     @unique
+  applicationId         Int                     @unique
   isVerified            Boolean                 @default(false)
   createdAt             DateTime
   updatedAt             DateTime
   size                  Int                     @default(0)
   type                  String                  @default("")
-  user                  User                    @relation(fields: [userId], references: [id])
+  user                  User?                   @relation(fields: [userId], references: [id])
+  application           Application?            @relation(fields: [applicationId], references: [id])
 }
 
 model Resume {
