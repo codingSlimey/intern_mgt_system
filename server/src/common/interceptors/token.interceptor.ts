@@ -27,7 +27,7 @@ import {
         const decoded = await this.jwtService.verify(accessToken, {
           secret: process.env.SECRET_KEY,
         });
-        return { sub: decoded.sub, role: decoded.role, name: decoded.name };
+        return { sub: decoded.sub, role: decoded.role, email: decoded.email };
       } catch (error) {
         return;
       }
