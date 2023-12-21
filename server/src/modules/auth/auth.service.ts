@@ -162,7 +162,7 @@ export class AuthService {
       throw new BadRequestException('user not found');
     }
 
-    const secret = process.env.SECRET + user.hashedPassword;
+    const secret = process.env.SECRET_KEY + user.hashedPassword;
 
     try {
       await this.jwtService.verify(token, { secret: secret });

@@ -10,6 +10,8 @@ import { AuthRepository } from './auth.repository';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { MailModule } from '../mail/mail.module';
+import { CoordinatorRepository } from '../coordinator/coordinator.repository';
+import { SuperviserRepository } from '../superviser/superviser.repository';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { MailModule } from '../mail/mail.module';
     JwtStrategy, 
     RefreshTokenStrategy, 
     StudentRepository, 
+    CoordinatorRepository,
+    SuperviserRepository,
     MailService,
     OtpService,
     JwtService,
