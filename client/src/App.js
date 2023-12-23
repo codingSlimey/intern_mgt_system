@@ -12,6 +12,7 @@ import StuProfile from "./pages/profile/student/StuProfile";
 import CoodProfile from "./pages/profile/staff/CoodProfile";
 import SupervisorProfile from "./pages/profile/staff/SupervisorProfile";
 import CoordinatorDash from "./pages/dashboard/COORDINATOR/CoordinatorDash";
+import SupervisorAccount from "./pages/dashboard/SUPERVISORACCOUNT/SupervisorAccount";
 
 function App() {
 	return (
@@ -53,6 +54,10 @@ function App() {
 					<Route 
 						path="/coordinator/dashboard" 
 						element={<CoordinatorDash />} />
+					<Route
+						path="/coordinator/createsupervisor"
+						element={<SupervisorAccount />}
+					/>
 				</Routes>
 			</Router>
 		</>
