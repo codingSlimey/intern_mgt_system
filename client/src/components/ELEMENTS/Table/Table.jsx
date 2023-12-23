@@ -1,94 +1,41 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { TableFooter, TablePagination } from "@mui/material";
+import React, { useState } from "react";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+const ReusableTable = ({ data, columns }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage] = useState(10);
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
 
-const StyledTableHeadRow = styled(TableRow)(({ theme }) => ({
-  "& .MuiTableCell-root.MuiTableCell-head": {
-    color: "white",
-    backgroundColor: "#003976",
-  },
-}));
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-export default function CustomizedTables() {
-  const [isResult, setIsResult] = React.useState(5);
-  const handleResultChange = (e) => {
-    setIsResult(e.target.value);
-  };
   return (
-    <div className="flex flex-col items-end">
-      <select
-        id=""
-        onChange={handleResultChange}
-        className="bg-white border-2 border-black-200 py-2 px-4 text-[#003976]">
-        <option value={5}>5 results</option>
-        <option value={10}>10 results</option>
-        <option value={15}>15 results</option>
-      </select>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table" op>
-          <TableHead>
-            <StyledTableHeadRow>
-              <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-              <StyledTableCell align="right">Calories</StyledTableCell>
-              <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-              <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-              <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-            </StyledTableHeadRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell component="th" scope="row">
-                  {row.name}
-                </StyledTableCell>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                <StyledTableCell align="right">{row.protein}</StyledTableCell>
-              </StyledTableRow>
+    <div className="w-full">
+      <table className="w-full">
+        <thead className="bg-blue-900 text-white">
+          <tr>
+            {columns.map((column, index) => (
+              <th key={index} className="p-2 text-left">
+                {column}
+              </th>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </tr>
+        </thead>
+        <tbody>
+          {currentRows.map((row, rowIndex) => (
+            <tr
+              key={rowIndex}
+              className={rowIndex % 2 === 0 ? "bg-gray-200" : "bg-gray-100"}>
+              {columns.map((column, colIndex) => (
+                <td key={colIndex} className="p-2 text-left">
+                  {row[column]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
-}
+};
+
+export default ReusableTable;
