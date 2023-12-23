@@ -14,6 +14,7 @@ const StuApplicationForm = () => {
 
 
     const [t, i18n] = useTranslation('global');
+    const [applicationStatus, setApplicationStatus] = useState(false)
     const [userData, setUserData] = useState({
         stdNo: '',
         fname: '',
@@ -23,7 +24,7 @@ const StuApplicationForm = () => {
         duration: ''
     })
 
-    console.log(userData)
+    // console.log(userData)
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -33,6 +34,11 @@ const StuApplicationForm = () => {
                 [name]: value
             }
         })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setApplicationStatus(prev => !prev)
     }
   return (
     <>
@@ -76,7 +82,7 @@ const StuApplicationForm = () => {
                             <option value={userData.duration}>40 days</option>
                         </select>
 
-                        <button>{t('application.submit')}</button>
+                        <button onClick={handleSubmit}>{t('application.submit')}</button>
                     </form>
                     <div className={styles.info}>
                         <div className={styles.details}>
@@ -127,12 +133,38 @@ const StuApplicationForm = () => {
                             </div> 
                         </div>
                     </div>
-
                 </div>
         </section>
+        {applicationStatus && <ApplicationSuccessful />}
     </>
   )
 }
 
 
 export default StuApplicationForm;
+
+
+const ApplicationSuccessful = () => {
+    const [t, i18n] = useTranslation('global')
+
+    return (
+        <section className={styles.conf}>
+            <div className={styles.confFlex}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="49" height="48" viewBox="0 0 49 48" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M34.318 17.0311C35.021 17.7341 35.021 18.8738 34.318 19.5767L22.9276 30.9671C22.2248 31.6699 21.0853 31.6701 20.3823 30.9674L14.6847 25.2722C13.9816 24.5694 13.9814 23.4297 14.6842 22.7266C15.387 22.0235 16.5267 22.0232 17.2298 22.726L21.6546 27.149L31.7724 17.0311C32.4754 16.3282 33.6151 16.3282 34.318 17.0311Z" fill="#406A98"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.88391 5.38391C9.88657 1.38124 16.0758 0 24.5 0C32.9242 0 39.1134 1.38124 43.1161 5.38391C47.1188 9.38657 48.5 15.5758 48.5 24C48.5 32.4242 47.1188 38.6134 43.1161 42.6161C39.1134 46.6188 32.9242 48 24.5 48C16.0758 48 9.88657 46.6188 5.88391 42.6161C1.88124 38.6134 0.5 32.4242 0.5 24C0.5 15.5758 1.88124 9.38657 5.88391 5.38391ZM8.42949 7.92949C5.49436 10.8646 4.1 15.7754 4.1 24C4.1 32.2246 5.49436 37.1354 8.42949 40.0705C11.3646 43.0056 16.2754 44.4 24.5 44.4C32.7246 44.4 37.6354 43.0056 40.5705 40.0705C43.5056 37.1354 44.9 32.2246 44.9 24C44.9 15.7754 43.5056 10.8646 40.5705 7.92949C37.6354 4.99436 32.7246 3.6 24.5 3.6C16.2754 3.6 11.3646 4.99436 8.42949 7.92949Z" fill="#406A98"/>
+                </svg>
+                <Paragraph 
+                    text={t('confirmation.delSuccess')}
+                    color={'#003976'}
+                    fontSize={'20px'}
+                    fontWeight={'500'}
+                    textAlign={'center'}
+                />
+                <div className={styles.btnCont}>
+                    <button style={{background: '#003976', color: '#fff'}}>{t("confirmation.done")}</button>
+                </div>
+            </div>
+        </section>
+    )
+}
