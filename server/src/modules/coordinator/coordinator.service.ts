@@ -20,4 +20,7 @@ export class CoordinatorService {
   async findByEmail(email: string) {
     return true;
   }
+  async getAllDepartments(){
+    return await this.coordinatorRepository.getAllDepartments();
+  }
 }

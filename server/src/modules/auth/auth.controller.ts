@@ -117,10 +117,10 @@ export class AuthController {
   @Post('send-code')
   @HttpCode(HttpStatus.CREATED)
   async sendCode(
-    @Body() requestBody: { userType: UserType; verificationDto: VerificationDto }
+    @Body() verificationDto: VerificationDto 
   ) {
-    const { userType, verificationDto } = requestBody;
-    return await this.authService.sendCode(userType, verificationDto);
+    const { userType, email } = verificationDto;
+    return await this.authService.sendCode(verificationDto);
   }
 
   @Public()

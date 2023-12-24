@@ -1,7 +1,7 @@
 import { Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
 import { SuperviserService } from './superviser.service';
 
-@Controller('superviser')
+@Controller('supervisor')
 export class SuperviserController {
     constructor(private readonly superviserService: SuperviserService) {}
 

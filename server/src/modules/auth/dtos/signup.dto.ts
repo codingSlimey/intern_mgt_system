@@ -10,6 +10,8 @@ import {
   MinLength,
   Validate,
   IsPhoneNumber,
+  IsEnum,
+  IsIn,
 } from 'class-validator';
 import { CustomMatchPasswords } from 'src/common/utils/password.util';
 import { UserType } from '../types';
@@ -19,10 +21,13 @@ export class VerificationDto {
   @IsNotEmpty()
   @Transform(({ value }) => value.toLowerCase())
   email: string;
+
+  @IsEnum(UserType)
+  userType: UserType;
 }
 
 abstract class UserSignUpDto {
-  @IsNotEmpty()
+  @IsEnum(UserType)
   userType: UserType;
 
   @IsString()
@@ -39,10 +44,6 @@ abstract class UserSignUpDto {
   @IsNotEmpty()
   @Transform(({ value }) => value.toLowerCase())
   email: string;
-
-  @IsNotEmpty()
-  @IsString()
-  name: string;
 
   @IsNotEmpty()
   @IsNumber()

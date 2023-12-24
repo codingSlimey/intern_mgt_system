@@ -38,4 +38,11 @@ export class CoordinatorController {
     remove(@Param('id') id: number) {
       return this.userService.softDelete(id);
     }*/
+
+    @Get('departments')
+    @HttpCode(HttpStatus.OK)
+    async getAllDepartments() {
+      const result = await this.coordinatorService.getAllDepartments();
+      return JSON.stringify(result)
+    }
 }

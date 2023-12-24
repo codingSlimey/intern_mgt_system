@@ -7,6 +7,11 @@ import { Department } from '@prisma/client';
 export class CoordinatorRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
+  async getAllDepartments() {
+    const Department = require('../../common/enums/department.enum');
+    return Department;
+  }
+
   async find(email: string): Promise<any | undefined> {
     return await this.prismaService.coordinator.findFirst({ where: { email: email }, include: {user: true} }) ;
   }
@@ -56,9 +61,17 @@ export class CoordinatorRepository {
         phone: user.phone,
         hashedPassword: user?.hashedPassword,
         email: user.email,
+        createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         lastLoggedInTime: new Date().toISOString(),
         role: user.role,
+        image: {
+          create: {
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            url: ''
+          }
+        },
         coordinator: {
             create: {
                 department: user.department as Department,

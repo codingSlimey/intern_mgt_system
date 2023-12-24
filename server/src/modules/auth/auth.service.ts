@@ -133,8 +133,8 @@ export class AuthService {
     });
   }
 
-  async sendCode(userType: UserType, verificationDto: VerificationDto) {
-    await this.validateEmailForSignUp(userType, verificationDto.email);
+  async sendCode(verificationDto: VerificationDto) {
+    await this.validateEmailForSignUp(verificationDto.userType, verificationDto.email);
     const varification = await this.authRepository.findVerification(
       verificationDto.email,
     );
@@ -200,17 +200,17 @@ export class AuthService {
 
   async validateEmailForSignUp(userType: UserType, email: string): Promise<boolean | undefined> {
     let user;
-    if (userType == UserType.Student) {
+    if (userType === UserType.Student) {
       user = await this.studentRepository.find(email);
     } 
-    else if (userType == UserType.Coordinator) {
+    else if (userType === UserType.Coordinator) {
       user = await this.coordinatorRepository.find(email);
     }
-    else if (userType == UserType.Superviser) {
+    else if (userType === UserType.Superviser) {
       user = await this.superviserRepository.find(email);
     }
     else {
-      throw new BadRequestException('Invalid user type')
+      throw new BadRequestException('Invalid user type');
     }
 
     if (user) {

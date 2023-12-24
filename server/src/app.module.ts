@@ -7,9 +7,18 @@ import { ApplicationModule } from './modules/application/application.module';
 import { CompanyModule } from './modules/company/company.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { S3ManagerModule } from './modules/s3-manager/s3-manager.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, PrismaModule, StudentModule, CoordinatorModule, SuperviserModule, ApplicationModule, CompanyModule],
+  imports: [AuthModule, 
+            PrismaModule,
+            ConfigModule.forRoot({ isGlobal: true}),
+            StudentModule,
+            CoordinatorModule, 
+            SuperviserModule, 
+            ApplicationModule, 
+            CompanyModule
+          ],
   controllers: [],
   providers: [],
 })

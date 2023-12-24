@@ -21,6 +21,14 @@ enum Department {
   DEPARTMENT3
 }
 
+enum WorkingFields {
+  TECHNOLOGY
+  BUSINESS
+  FIELD1
+  FIELD2
+  FIELD3
+}
+
 model User {
   id                    Int                     @id @default(autoincrement())
   firstname             String                  @db.VarChar(255)
@@ -75,19 +83,23 @@ model Application {
   name                  String
   days                  Int
   insurance             Image?
+  isVerified            Boolean                 @default(false)
   resume                Resume                  @relation(fields: [resumeId], references: [id])
   student               Student                 @relation(fields:[studentId], references:[id])
 }
 
 model Company {
   id                    Int                     @id @default(autoincrement())
-  workingFields         String[]
+  workingFields         WorkingFields[]
   postalAddr            Int
   fax                   Int?        
   telephoneNumber       String
   email                 String
   webAddr               String
   description           String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt     
+  logo                  String
   superviser            Superviser[]
 }
 
