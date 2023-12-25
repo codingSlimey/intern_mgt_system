@@ -3,6 +3,8 @@
         "searchBox" : "Burada ara",
         "stu" : "Öğrenci",
         "admin" : "Yönetici",
+        "supe" : "Gözetmen",
+        "cood" : "Koordinatör",
         "en" : "İngilizce",
         "tr" : "Türkçe",
         "prof" : "Profil",
@@ -105,18 +107,24 @@
     },
     "application" : {
         "form" : "Basvuru Formu",
+        "view" : "Görüş Basvuru",
         "stuInfo" : "Ogrenci Bilgi",
+        "companyInfo" : "Şirket Bilgileri",
         "tel" : "Telephon",
         "dur" : "Süre",
+        "accept": "Kabul Etmek",
+        "reject" : "Reddetmek",
         "submit" : "Başvuruyu Gönder",
-        "trncStu" : "KKTC/Türkiye'deki şirketlere başvuran öğrencilerin bu ülkelerin mevzuatlarına göre başvuru formuyla birlikte Sosyal Sigorta Formunu da doldurup göndermeleri gerekmektedir."
+        "trncStu" : "KKTC/Türkiye'deki şirketlere başvuran öğrencilerin bu ülkelerin mevzuatlarina göre başvuru formuyla birlikte Sosyal Sigorta Formunu da doldurup göndermeleri gerekmektedir."
     },
     "internships" : {
         "apply" : "Uygula",
         "intInfo" : "Staj Bilgileri",
         "company" : "Şirket",
         "role" : "Rol",
-        "desc" : "Tanim"
+        "desc" : "Tanim",
+        "field" : "Çalişma Alani",
+        "pos" : "Konum"
     }
 
 

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import StudentLogin from "./pages/login/student/StudentLogin";
 import StaffLogin from "./pages/login/staff/StaffLogin";
-import StudentDash from "./pages/dashboard/STUDENT/StudentDash";
+import StudentDash from "./pages/dashboard/student/StudentDash";
 import StudentSignup from "./pages/signup/student/StudentSignup";
 import StaffSignup from "./pages/signup/staff/StaffSignup";
 import SignupSuccess from "./pages/signup/SignupSuccess";
@@ -13,8 +13,9 @@ import CoodProfile from "./pages/profile/staff/CoodProfile";
 import SupervisorProfile from "./pages/profile/staff/SupervisorProfile";
 import StudAnnouncements from "./pages/announcements/student/StudAnnouncements";
 import StuApplicationForm from "./pages/application/student/StuApplicationForm";
-import Internship from "./pages/internships/student/Internship";
 import Internships from "./pages/internships/student/Internships";
+import CoodOverview from "./pages/dashboard/coodinator/CoodOverview";
+import ViewStuApplication from "./pages/application/staff/ViewStuApplication";
 
 function App() {
 	return (
@@ -49,6 +50,10 @@ function App() {
 					<Route path="/student/add/new/log" element={<AddLog />} />
 					<Route path="/student/view-log" element={<ViewLog />} />
 					<Route
+						path="/coodinator/overview"
+						element={<CoodOverview />}
+					/>
+					<Route
 						path="/coordinator/profile"
 						element={<CoodProfile />}
 					/>
@@ -67,6 +72,10 @@ function App() {
 					<Route
 						path="/student/internship/application-form"
 						element={<StuApplicationForm />}
+					/>
+					<Route
+						path="/coordinator/view/internship/application"
+						element={<ViewStuApplication />}
 					/>
 				</Routes>
 			</Router>

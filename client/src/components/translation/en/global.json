@@ -3,6 +3,8 @@
         "searchBox" : "Search here",
         "stu" : "Student",
         "admin" : "Admin",
+        "supe" : "Supervisor",
+        "cood" : "Coordinator",
         "en" : "English",
         "tr" : "Turkish",
         "prof" : "My Profile",
@@ -106,9 +108,13 @@
     },
     "application" : {
         "form" : "Application Form",
+        "view" : "View Application",
         "stuInfo" : "Student Information",
+        "companyInfo" : "Company Information",
         "tel" : "Telephone/Mobile", 
         "dur" : "Duration",
+        "accept": "Accept",
+        "reject" : "Reject",
         "submit" : "Submit Application",
         "trncStu" : "Students applying to companies in TRNC/Turkey are required to fill and submit the Social Insurance Form along with the application form according to the regulations of these countries."
     },
@@ -117,7 +123,9 @@
         "intInfo" : "Internship Information",
         "company" : "Company",
         "role" : "Role",
-        "desc" : "Description"
+        "desc" : "Description",
+        "field" : "Working Field",
+        "pos" : "Position"
     }
 
 }
