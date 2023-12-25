@@ -13,6 +13,7 @@ import CoodProfile from "./pages/profile/staff/CoodProfile";
 import SupervisorProfile from "./pages/profile/staff/SupervisorProfile";
 import CoordinatorDash from "./pages/dashboard/COORDINATOR/CoordinatorDash";
 import SupervisorAccount from "./pages/dashboard/SUPERVISORACCOUNT/SupervisorAccount";
+import Settings from "./pages/settings/settings";
 
 function App() {
 	return (
@@ -57,6 +58,10 @@ function App() {
 					<Route
 						path="/coordinator/createsupervisor"
 						element={<SupervisorAccount />}
+					/>
+					<Route
+						path="/coordinator/settings"
+						element={<Settings />}
 					/>
 				</Routes>
 			</Router>
