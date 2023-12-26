@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Header from '../../components/ELEMENTS/Header/Header';
 
-const Log = () => {
+const Log = ({ to }) => {
 
     const [t, i18n] = useTranslation("global");
 
@@ -47,7 +47,7 @@ const Log = () => {
             width={'96%'}
             margin={'1rem auto'}
         />
-        <Link to={"/student/view-log"} className={styles.btn}>{t('logbook.view')}</Link>
+        <Link to={to} className={styles.btn}>{t('logbook.view')}</Link>
     </div>
   )
 }

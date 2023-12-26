@@ -1,16 +1,14 @@
-import React from 'react';
-import styles from './styles.module.css';
+import React from 'react'
+import styles from './styles.module.css'
 import SideBar from '../../../components/ELEMENTS/Nav/SideBar';
 import Navbar from '../../../components/ELEMENTS/Nav/Navbar';
 import Header from '../../../components/ELEMENTS/Header/Header';
-import HeaderTwo from '../../../components/ELEMENTS/Header/HeaderTwo';
 import { useTranslation } from 'react-i18next';
-import Image from '../../../components/ELEMENTS/Image/Image';
-import SIFDownload from './SIFDownload';
 
-const ViewStuApplication = () => {
+const ViewOngoingInternship = () => {
 
     const [t, i18n] = useTranslation('global');
+
 
   return (
     <>
@@ -18,9 +16,9 @@ const ViewStuApplication = () => {
         <SideBar />
         <section className={styles.main}>
             <Header 
-                text={t('application.view')}
+                text={t('internships.intInfo')}
                 color={'#003679'}
-                fontSize={'18px'}
+                fontSize={'20px'}
                 fontWeight={'600'}
                 margin={'1.5rem 1rem'}
             />
@@ -89,12 +87,9 @@ const ViewStuApplication = () => {
                     </div>
                 </div>
             </div>
-            <SIFDownload />
-            <button className={styles.decBtn} style={{background: '#003679'}}>{t('application.accept')}</button>
-            <button className={styles.decBtn} style={{background: '#ff1a2f'}}>{t('application.reject')}</button>
         </section>
     </>
   )
 }
 
-export default ViewStuApplication;
+export default ViewOngoingInternship;

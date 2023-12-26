@@ -115,6 +115,8 @@
         "accept": "Kabul Etmek",
         "reject" : "Reddetmek",
         "submit" : "Başvuruyu Gönder",
+        "trnc" : "KKTC",
+        "insurDownload" : "Sigorta Formunu İndirin",
         "trncStu" : "KKTC/Türkiye'deki şirketlere başvuran öğrencilerin bu ülkelerin mevzuatlarina göre başvuru formuyla birlikte Sosyal Sigorta Formunu da doldurup göndermeleri gerekmektedir."
     },
     "internships" : {
@@ -125,6 +127,26 @@
         "desc" : "Tanim",
         "field" : "Çalişma Alani",
         "pos" : "Konum"
+    },
+    "eval" : {
+        "eval" : "Değerlendirme",
+        "supe" : "Süpervizör Değerlendirmesi",
+        "cood" : "Koordinatör Değerlendirmesi",
+        "crit" : "Değerlendirmesi Kriterleri",
+        "poor" : "Fakir",
+        "fair" : "Adil",
+        "good" : "Iyi",
+        "submit" : "Gönder",
+        "unsat" : "Yetersiz",
+        "sat" : "Yeterli",
+        "exc" : "Mükemmel",
+        "int" : "İlgi",
+        "attend" : "Katilim",
+        "techKnow" : "Teknik bilgi ve Yetenek",
+        "genBhv" : "Genel Davraniş",
+        "overall" : "Genel Değerlendirme Sonucu",
+        "summary" : "Özet",
+        "comm" : "Yorumlar"
     }
 
 

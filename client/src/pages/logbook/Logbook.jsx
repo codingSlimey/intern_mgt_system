@@ -22,14 +22,14 @@ const Logbook = () => {
                 <button className={styles.downloadBtn}>{t('logbook.download')} <MdOutlineFileDownload /></button>
             </div>
             <main className={styles.main}>
-                <Log />
-                <Log />
-                <Log />
-                <Log />
-                <Log />
-                <Log />
-                <Log />
-                <Log />
+                <Log to={"/student/view-log"} />
+                <Log to={"/student/view-log"} />
+                <Log to={"/student/view-log"} />
+                <Log to={"/student/view-log"} />
+                <Log to={"/student/view-log"} />
+                <Log to={"/student/view-log"} />
+                <Log to={"/student/view-log"} />
+                <Log to={"/student/view-log"} />
             </main>
 
         </section>

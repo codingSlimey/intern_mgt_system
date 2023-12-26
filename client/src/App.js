@@ -16,6 +16,13 @@ import StuApplicationForm from "./pages/application/student/StuApplicationForm";
 import Internships from "./pages/internships/student/Internships";
 import CoodOverview from "./pages/dashboard/coodinator/CoodOverview";
 import ViewStuApplication from "./pages/application/staff/ViewStuApplication";
+import ViewOngoingInternship from "./pages/internships/coordinator/ViewOngoingInternship";
+import ViewStdLogbook from "./pages/logbook/coordinator/ViewStdLogbook";
+import ViewSingleLog from "./pages/logbook/coordinator/ViewSingleLog";
+import ViewStdSupeEvaluation from "./pages/evaluation/coordinator/ViewSupeEvaluation";
+import ViewStdCoodEvaluation from "./pages/evaluation/supervisor/ViewStdCoodEvaluation";
+import CoodStdEvaluation from "./pages/evaluation/coordinator/CoodStdEvaluation";
+import SupeStdEvaluation from "./pages/evaluation/supervisor/SupeStdEvaluation";
 
 function App() {
 	return (
@@ -50,12 +57,40 @@ function App() {
 					<Route path="/student/add/new/log" element={<AddLog />} />
 					<Route path="/student/view-log" element={<ViewLog />} />
 					<Route
+						path="/coordinator/view-student-supervisor/evaluation"
+						element={<ViewStdSupeEvaluation />}
+					/>
+					<Route
+						path="/supervisor/view-student-coordinator/evaluation"
+						element={<ViewStdCoodEvaluation />}
+					/>
+					<Route
+						path="/coordinator/view-student-logbook"
+						element={<ViewStdLogbook />}
+					/>
+					<Route
+						path="/coordinator/student/assessment"
+						element={<CoodStdEvaluation />}
+					/>
+					<Route
+						path="/coordinator/view/student-name/log/day"
+						element={<ViewSingleLog />}
+					/>
+					<Route
+						path="/coordinator/view-internship"
+						element={<ViewOngoingInternship />}
+					/>
+					<Route
 						path="/coodinator/overview"
 						element={<CoodOverview />}
 					/>
 					<Route
 						path="/coordinator/profile"
 						element={<CoodProfile />}
+					/>
+					<Route
+						path="/supervisor/student/assessment"
+						element={<SupeStdEvaluation />}
 					/>
 					<Route
 						path="/supervisor/profile"

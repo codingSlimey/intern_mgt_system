@@ -116,6 +116,8 @@
         "accept": "Accept",
         "reject" : "Reject",
         "submit" : "Submit Application",
+        "trnc" : "TRNC",
+        "insurDownload" : "Download Insurance Form",
         "trncStu" : "Students applying to companies in TRNC/Turkey are required to fill and submit the Social Insurance Form along with the application form according to the regulations of these countries."
     },
     "internships" : {
@@ -126,6 +128,26 @@
         "desc" : "Description",
         "field" : "Working Field",
         "pos" : "Position"
+    },
+    "eval" : {
+        "eval" : "Assessment",
+        "supe" : "Supervisor Assessment",
+        "cood" : "Coordinator Assessment",
+        "crit" : "Assessment Criteria",
+        "poor" : "Poor",
+        "fair" : "Fair",
+        "good" : "Good",
+        "submit" : "Submit",
+        "unsat" : "Unsatisfactory",
+        "sat" : "Satisfactory",
+        "exc" : "Excellent",
+        "int" : "Interest",
+        "attend" : "Attendance",
+        "techKnow" : "Technical knowledge and Ability",
+        "genBhv" : "General Behaviour",
+        "overall" : "Overall Assessment Result",
+        "summary" : "Summary",
+        "comm" : "Comments"
     }
 
 }
