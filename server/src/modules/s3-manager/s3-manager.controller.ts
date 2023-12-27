@@ -17,6 +17,7 @@ import { DeleteObject } from './dto/delete-object.dto';
 
 @Controller('s3-manager')
 export class S3ManagerController {
+
     constructor(private readonly s3: S3ManagerService) {}
 
     @Roles(Role.Admin)

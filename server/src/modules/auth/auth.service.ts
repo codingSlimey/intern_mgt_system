@@ -68,6 +68,7 @@ export class AuthService {
       sub: user.id,
       role: user.role,
       email: user.email,
+      type: userType
     } 
     
     return await this.getTokens(userData);
@@ -119,8 +120,23 @@ export class AuthService {
   }
 
   async refreshTokens(userId: number, refreshToken: string): Promise<Tokens> {
-    const user = await this.studentRepository.findById(userId);
+    const student = await this.studentRepository.findById(userId);
+    const coordinator = await this.coordinatorRepository.findById(userId);
+    const superviser = await this.superviserRepository.findById(userId);
 
+    let user;
+    if (student) {
+      user = student;
+    } 
+    else if (coordinator) {
+      user = coordinator;
+    }
+    else if (superviser) {
+      user = superviser;
+    }
+    else {
+      throw new BadRequestException('Invalid user type');
+    }
     if (!user || !user.hashedRT) throw new ForbiddenException('Access Denied');
 
     const rtMatches = await Hash.compare(refreshToken, user.hashedRT);
@@ -220,23 +236,28 @@ export class AuthService {
   }
 
   async generateUniqueLink(email: string) {
-    const user = await this.studentRepository.find(email);
+    let user;
+    user = await this.studentRepository.find(email);
+    user = await this.coordinatorRepository.find(email);
+    user = await this.superviserRepository.find(email);
 
-    if (!user) {
+
+    if(!user) {
       throw new BadRequestException('user not found');
     }
-
-    const secret = process.env.SECRET_KEY + user.hashedPassword;
     const jwtPayload: JwtPayload = {
-      sub: user.id,
-      role: user.role,
-      email: user.email,
-    };
+        sub: user.id,
+        role: user.role,
+        email: user.email,
+      };
+    const secret = process.env.SECRET_KEY + user.hashedPassword;
+      
+
     const token = await this.jwtService.sign(jwtPayload, {
       secret: secret,
       expiresIn: '15m',
     });
-    const link = `https://emu.edu.tr/new-password/${user.id}/${token}`;
+    const link = `https://eims.emu.edu.tr/new-password/${user.id}/${token}`;
     await this.mailService.forgetPassword(link, email);
 
     return { sucess: true };
@@ -284,7 +305,7 @@ export class AuthService {
       user = await this.coordinatorRepository.create({
         email: studentSignUpDto.email,
         phone: studentSignUpDto.phone,
-        department: studentSignUpDto.department as Department,
+        departmentId: studentSignUpDto.departmentId,
         firstname: studentSignUpDto.firstname,
         lastname: studentSignUpDto.lastname,
         hashedPassword: hashedPassword,

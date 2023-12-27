@@ -1,5 +1,6 @@
-import { Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get,Post, HttpCode, HttpStatus, Param, ParseIntPipe, Body } from '@nestjs/common';
 import { SuperviserService } from './superviser.service';
+import { AssessmentCriteriaDto } from './dto/assessment.dto';
 
 @Controller('supervisor')
 export class SuperviserController {
@@ -17,4 +18,11 @@ export class SuperviserController {
       const result = await this.superviserService.findOne(id);
       return JSON.stringify(result);
     }
+
+    @Post('assessment')
+    @HttpCode(HttpStatus.CREATED)
+    async AssessStudent(@Body() assessmentCriteriaDto: AssessmentCriteriaDto) {
+      return await this.superviserService.AssessStudent(assessmentCriteriaDto);
+    }
+
 }

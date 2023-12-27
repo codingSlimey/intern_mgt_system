@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SuperviserRepository } from './superviser.repository';
+import { AssessmentCriteriaDto } from './dto/assessment.dto';
 
 @Injectable()
 export class SuperviserService {
@@ -17,6 +18,10 @@ export class SuperviserService {
       return await this.superviserRepository.findUnique(id);
     }
     async findByEmail(email: string) {
-      return true;
+      return await this.superviserRepository.findByEmail(email);
+    }
+
+    async AssessStudent(assessmentCriteriaDto: AssessmentCriteriaDto) {
+      return await this.superviserRepository.AssessStudent(assessmentCriteriaDto);
     }
 }

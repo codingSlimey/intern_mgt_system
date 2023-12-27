@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Coordinator } from '../../common/interfaces/users.interface';
 import { Department } from '@prisma/client';
+import { AssessmentCriteriaDto } from './dto/assessment.dto';
 
 @Injectable()
 export class CoordinatorRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   async getAllDepartments() {
-    const Department = require('../../common/enums/department.enum');
-    return Department;
+
   }
 
   async find(email: string): Promise<any | undefined> {
@@ -69,12 +69,16 @@ export class CoordinatorRepository {
           create: {
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-            url: ''
+            name: ""
           }
         },
         coordinator: {
             create: {
-                department: user.department as Department,
+                department: {
+                  connect: {
+                    id: user.departmentId,
+                  }
+                },
                 email: user.email,
             }
         }
@@ -109,6 +113,23 @@ export class CoordinatorRepository {
       data: {
         hashedPassword: hashedPassword,
       },
+    });
+  }
+
+  async findByEmail(email: string) {
+    return await this.prismaService.user.findFirst({where: {email}, include: {coordinator:true}});
+  }
+
+  async AssessStudent(assessmentCriteriaDto: AssessmentCriteriaDto) {
+    return await this.prismaService.coordinatorAssessment.create({
+        data: {
+          experienceGained: assessmentCriteriaDto.experienceGained,
+          overalAssessmentResult: assessmentCriteriaDto.overalAssessmentResult,
+          presentation: assessmentCriteriaDto.presentation,
+          qualityOfStudentInternshipReport: assessmentCriteriaDto.qualityOfStudentInternshipReport,
+          visualPresentationAid: assessmentCriteriaDto.visualPresentationAid,
+          studentId: assessmentCriteriaDto.studentId
+        },
     });
   }
 }

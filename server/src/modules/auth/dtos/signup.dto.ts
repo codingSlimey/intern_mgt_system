@@ -11,7 +11,6 @@ import {
   Validate,
   IsPhoneNumber,
   IsEnum,
-  IsIn,
 } from 'class-validator';
 import { CustomMatchPasswords } from 'src/common/utils/password.util';
 import { UserType } from '../types';
@@ -72,9 +71,9 @@ export class StudentSignUpDto extends UserSignUpDto{
 }
 
 export class CoordinatorSignUpDto extends UserSignUpDto {
-  @IsNotEmpty()
-  @IsString()
-  department: string;
+  
+  @IsNumber()
+  departmentId: number=0;
 }
 
 export class SuperviserSignUpDto extends UserSignUpDto {
@@ -83,5 +82,5 @@ export class SuperviserSignUpDto extends UserSignUpDto {
   position: string;
 
   @IsNumber()
-  companyId: number=1;
+  companyId: number=0;
 }

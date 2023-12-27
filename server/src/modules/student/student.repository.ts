@@ -62,6 +62,11 @@ export class StudentRepository {
             create: {
                 studentNumber: user.studentNo,
                 email: user.email,
+                department: {
+                  connect: {
+                    id: user.departmentId
+                  }
+                }
             }
         }
       },
@@ -96,5 +101,9 @@ export class StudentRepository {
         hashedPassword: hashedPassword,
       },
     });
+  }
+
+  async findByEmail(email: string) {
+    return await this.prismaService.user.findFirst({where: {email: email}, include: {student: true}})
   }
 }

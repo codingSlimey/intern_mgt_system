@@ -17,13 +17,13 @@ export class CompanyController {
 
     @Get('company')
     @HttpCode(HttpStatus.OK)
-    async getCompany(@Body('compantId', ParseIntPipe) companyId: number): Promise<Company> {
+    async getCompany(@Body('companyId', ParseIntPipe) companyId: number): Promise<Company> {
         return await this.companyService.findCompany(companyId);
     }
 
     @Get('supervisors')
     @HttpCode(HttpStatus.OK)
-    async getSupervisors(@Body('compantId', ParseIntPipe) companyId: number): Promise<Superviser[]> {
+    async getSupervisors(@Body('companyId', ParseIntPipe) companyId: number): Promise<Superviser[]> {
         return await this.companyService.findSupervisors(companyId);
     }
 

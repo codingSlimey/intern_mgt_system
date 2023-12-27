@@ -42,7 +42,6 @@ export class CoordinatorController {
     @Get('departments')
     @HttpCode(HttpStatus.OK)
     async getAllDepartments() {
-      const result = await this.coordinatorService.getAllDepartments();
-      return JSON.stringify(result)
+      return await this.coordinatorService.getAllDepartments();
     }
 }

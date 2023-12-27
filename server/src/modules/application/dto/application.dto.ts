@@ -27,8 +27,4 @@ export class createApplicationDto {
   @IsNotEmpty()
   @IsString()
   resume: string;
-
-  @IsNotEmpty()
-  @IsString()
-  insurance: string;
 }

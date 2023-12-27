@@ -13,10 +13,11 @@ class User {
 
 export interface Student extends User{
   studentNo: number;
+  departmentId: number;
 }
 
 export interface Coordinator extends User {
-  department: string;
+  departmentId: number;
 }
 
 export interface Superviser extends User {

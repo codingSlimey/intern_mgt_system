@@ -1,12 +1,22 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { S3 } from 'aws-sdk';
+import * as AWS from 'aws-sdk';
 import { InjectAwsService } from 'nest-aws-sdk';
 import * as path from 'path';
 import { File } from '../../common/interfaces/file.interface';
 
 @Injectable()
 export class S3ManagerService {
-  constructor(@InjectAwsService(S3) private readonly s3: S3) {}
+  private s3: AWS.S3;
+
+  constructor() {
+    AWS.config.update({
+      accessKeyId: process.env.ACCESS_KEY_ID,
+      secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    });
+
+    this.s3 = new AWS.S3();
+  }
+  
 
   async listBuckets() {
     const listBuckets = await this.s3.listBuckets().promise();

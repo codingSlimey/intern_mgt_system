@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { Superviser } from '../../common/interfaces/users.interface';
+import { AssessmentCriteriaDto } from "./dto/assessment.dto";
 
 @Injectable()
 export class SuperviserRepository {
@@ -49,6 +50,7 @@ export class SuperviserRepository {
   
     async upsert(user: Partial<Superviser>): Promise<any> {
       return await this.prismaService.user.upsert({
+        where: { id: user.id },
         create: {
           firstname: user.firstname,
           lastname: user.lastname,
@@ -59,19 +61,18 @@ export class SuperviserRepository {
           lastLoggedInTime: new Date().toISOString(),
           role: user.role,
           supervisor: {
-              create: {
-                  position: user.position,
-                  companyId: user.companyId,
-                  email: user.email,
-              }
-          }
+            connect: {
+              id: user.id
+            },
+          },
         },
         update: {
           lastLoggedInTime: new Date().toISOString(),
         },
-        where: { id: user.id },
       });
     }
+    
+    
     async create(user: Partial<Superviser>) {
       return await this.prismaService.user.create({
         data: {
@@ -96,6 +97,23 @@ export class SuperviserRepository {
         data: {
           hashedPassword: hashedPassword,
         },
+      });
+    }
+
+    async findByEmail(email: string) {
+      return await this.prismaService.user.findFirst({where: {email}, include: {supervisor: true}});
+    }
+
+    async AssessStudent(assessmentCriteriaDto: AssessmentCriteriaDto) {
+      return await this.prismaService.superviserAssessment.create({
+          data: {
+            experienceGained: assessmentCriteriaDto.experienceGained,
+            overalAssessmentResult: assessmentCriteriaDto.overalAssessmentResult,
+            presentation: assessmentCriteriaDto.presentation,
+            qualityOfStudentInternshipReport: assessmentCriteriaDto.qualityOfStudentInternshipReport,
+            visualPresentationAid: assessmentCriteriaDto.visualPresentationAid,
+            studentId: assessmentCriteriaDto.studentId
+          },
       });
     }
 }

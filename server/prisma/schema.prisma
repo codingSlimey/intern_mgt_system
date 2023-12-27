@@ -15,7 +15,7 @@ enum Role {
   admin
 }
 
-enum Department {
+enum DepartmentNames {
   DEPARTMENT1
   DEPARTMENT2
   DEPARTMENT3
@@ -27,6 +27,39 @@ enum WorkingFields {
   FIELD1
   FIELD2
   FIELD3
+}
+
+enum Scores {
+  POOR
+  FAIR
+  GOOD
+  EXCELLENT
+}
+
+model CoordinatorAssessment {
+  id                                  Int                     @id @default(autoincrement())
+  qualityOfStudentInternshipReport    Scores                  @default(GOOD)
+  experienceGained                    Scores                  @default(GOOD)
+  presentation                        Scores                  @default(GOOD)
+  visualPresentationAid               Scores                  @default(GOOD)
+  overalAssessmentResult              Scores                  @default(GOOD)
+  studentId                           Int                     @unique
+  coordinatorId                       Int                     @unique
+  student                             Student?
+  coordinator                         Coordinator?            @relation(fields: [coordinatorId], references: [id])
+}
+
+model SuperviserAssessment {
+  id                                  Int                     @id @default(autoincrement())
+  qualityOfStudentInternshipReport    Scores                  @default(GOOD)
+  experienceGained                    Scores                  @default(GOOD)
+  presentation                        Scores                  @default(GOOD)
+  visualPresentationAid               Scores                  @default(GOOD)
+  overalAssessmentResult              Scores                  @default(GOOD)
+  studentId                           Int                     @unique
+  superviserId                        Int                     @unique
+  student                             Student?
+  superviser                          Superviser?             @relation(fields: [superviserId], references: [id])
 }
 
 model User {
@@ -51,10 +84,25 @@ model User {
 model Student {
   id                    Int                     @id @default(autoincrement())
   userId                Int                     @unique
+  departmentId          Int                     @unique
   email                 String                  @unique
   studentNumber         Int
-  applications          Application[]          
+  applications          Application[]       
+  cassessmentId         Int                     @unique
+  sassessmentId         Int                     @unique
+  cassessment           CoordinatorAssessment?  @relation(fields: [cassessmentId], references: [id])     
+  sassessment           SuperviserAssessment?   @relation(fields: [sassessmentId], references: [id])     
+  department            Department              @relation(fields: [departmentId], references: [id])
   user                  User                    @relation(fields: [userId], references: [id])
+}
+
+model Department {
+  id                    Int                     @id @default(autoincrement())
+  name                  DepartmentNames 
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt     
+  coordinator           Coordinator?
+  students              Student[]               
 }
 
 model Superviser {
@@ -63,16 +111,22 @@ model Superviser {
   email                 String                  @unique
   position              String
   companyId             Int
+  assessment            SuperviserAssessment?   
   company               Company                 @relation(fields:[companyId], references:[id])
   user                  User                    @relation(fields: [userId], references: [id])
+  coordinatorId         Int                     
+  coordinator           Coordinator             @relation(fields: [coordinatorId], references: [id])
 }
 
 model Coordinator {
   id                    Int                     @id @default(autoincrement())
   userId                Int                     @unique
   email                 String                  @unique
-  department            Department
+  departmentId          Int?                    @unique
+  assessment            CoordinatorAssessment?
+  department            Department?             @relation(fields: [departmentId], references: [id])
   user                  User                    @relation(fields: [userId], references: [id])
+  supervisers           Superviser[]    
 }
 
 
@@ -82,15 +136,17 @@ model Application {
   resumeId              Int                     @unique
   name                  String
   days                  Int
+  email                 String                  
   insurance             Image?
-  isVerified            Boolean                 @default(false)
+  cyprus                Boolean?                @default(false)
+  isApproved            Boolean                 @default(false)
   resume                Resume                  @relation(fields: [resumeId], references: [id])
   student               Student                 @relation(fields:[studentId], references:[id])
 }
 
 model Company {
   id                    Int                     @id @default(autoincrement())
-  workingFields         WorkingFields[]
+  workingFields         WorkingFields[]                                                      
   postalAddr            Int
   fax                   Int?        
   telephoneNumber       String
@@ -113,20 +169,23 @@ model Verification {
 
 model Image {
   id                    Int                     @id @default(autoincrement())
-  url                   String
+  name                  String
   userId                Int                     @unique
   applicationId         Int                     @unique
-  isVerified            Boolean                 @default(false)
   createdAt             DateTime
   updatedAt             DateTime
+  isVerified            Boolean                 @default(false)
   size                  Int                     @default(0)
-  type                  String                  @default("")
   user                  User?                   @relation(fields: [userId], references: [id])
   application           Application?            @relation(fields: [applicationId], references: [id])
 }
 
 model Resume {
   id                    Int                     @id @default(autoincrement())
-  url                   String
+  name                  String
+  isVerified            Boolean                 @default(false)
+  createdAt             DateTime
+  updatedAt             DateTime
+  size                  Int                     @default(0)
   application           Application?           
 }

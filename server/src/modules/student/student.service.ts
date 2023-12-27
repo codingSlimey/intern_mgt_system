@@ -18,6 +18,6 @@ export class StudentService {
     return await this.studentRepository.findUnique(id);
   }
   async findByEmail(email: string) {
-    return true;
+    return await this.studentRepository.findByEmail(email);
   }
 }
