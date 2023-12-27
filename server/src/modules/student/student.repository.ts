@@ -62,6 +62,11 @@ export class StudentRepository {
             create: {
                 studentNumber: user.studentNo,
                 email: user.email,
+                department: {
+                  connect: {
+                    id: user.departmentId
+                  }
+                }
             }
         }
       },

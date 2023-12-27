@@ -49,6 +49,7 @@ export class SuperviserRepository {
   
     async upsert(user: Partial<Superviser>): Promise<any> {
       return await this.prismaService.user.upsert({
+        where: { id: user.id },
         create: {
           firstname: user.firstname,
           lastname: user.lastname,
@@ -59,19 +60,18 @@ export class SuperviserRepository {
           lastLoggedInTime: new Date().toISOString(),
           role: user.role,
           supervisor: {
-              create: {
-                  position: user.position,
-                  companyId: user.companyId,
-                  email: user.email,
-              }
-          }
+            connect: {
+              id: user.id
+            },
+          },
         },
         update: {
           lastLoggedInTime: new Date().toISOString(),
         },
-        where: { id: user.id },
       });
     }
+    
+    
     async create(user: Partial<Superviser>) {
       return await this.prismaService.user.create({
         data: {

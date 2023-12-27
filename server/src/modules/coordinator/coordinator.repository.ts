@@ -8,8 +8,7 @@ export class CoordinatorRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   async getAllDepartments() {
-    const Department = require('../../common/enums/department.enum');
-    return Department;
+
   }
 
   async find(email: string): Promise<any | undefined> {
@@ -69,12 +68,16 @@ export class CoordinatorRepository {
           create: {
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
-            url: ''
+            name: ""
           }
         },
         coordinator: {
             create: {
-                department: user.department as Department,
+                department: {
+                  connect: {
+                    id: user.departmentId,
+                  }
+                },
                 email: user.email,
             }
         }

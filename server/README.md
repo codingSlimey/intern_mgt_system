@@ -71,3 +71,34 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+## Running Instructions
+```bash
+
+# install dependencies
+$ npm install
+
+# database creation
+$ npx prisma migrate save --name <migration-name(i.g mig1)>
+$ npx prisma migrate up
+$ npx prisma db seed --preview-feature
+
+Create .env inside src folder with following values:
+  [] DATABASE_URL
+  [] MAIL_HOST
+  [] MAIL_PORT
+  [] NODE_ENV
+  [] MAIL_USER
+  [] MAIL_PASSWORD
+  [] MAIL_PASSWORD
+  [] SECRET_KEY
+  [] ACCESS_KEY_ID
+  [] SECRET_ACCESS_KEY
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
