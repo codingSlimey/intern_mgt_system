@@ -23,6 +23,14 @@ import ViewStdSupeEvaluation from "./pages/evaluation/coordinator/ViewSupeEvalua
 import ViewStdCoodEvaluation from "./pages/evaluation/supervisor/ViewStdCoodEvaluation";
 import CoodStdEvaluation from "./pages/evaluation/coordinator/CoodStdEvaluation";
 import SupeStdEvaluation from "./pages/evaluation/supervisor/SupeStdEvaluation";
+import CoordinatorDash from "./pages/dashboard/COORDINATOR/CoordinatorDash";
+import SupervisorAccount from "./pages/dashboard/SUPERVISORACCOUNT/SupervisorAccount";
+import Settings from "./pages/settings/settings";
+import ViewAllInternships from "./pages/internships/coordinator/ViewAllInternships";
+import ViewAllStudents from "./pages/students/ViewAllStudents";
+import ViewSupervisors from "./pages/supervisors/ViewSupervisors";
+import Announcements from "./pages/announcements/coordinator/Announcements";
+import ViewStudentProfile from "./pages/students/ViewStudentProfile";
 
 function App() {
 	return (
@@ -32,10 +40,6 @@ function App() {
 					<Route path="/student/login" element={<StudentLogin />} />
 					<Route path="/student/signup" element={<StudentSignup />} />
 					<Route path="/staff/login" element={<StaffLogin />} />
-					<Route
-						path="/supervisor/signup"
-						element={<StaffSignup />}
-					/>
 					<Route path="/student/profile" element={<StuProfile />} />
 					<Route
 						path="/signup/successful"
@@ -52,17 +56,44 @@ function App() {
 						path="/student/dashboard"
 						element={<StudentDash />}
 					/>
+					<Route
+						path="/student/announcements"
+						element={<StudAnnouncements />}
+					/>
+					<Route
+						path="/student/internships/"
+						element={<Internships />}
+					/>
+					<Route
+						path="/student/internship/application-form"
+						element={<StuApplicationForm />}
+					/>
 					<Route path="/student/logbook" element={<Logbook />} />
 					<Route path="/student/add/new/log" element={<AddLog />} />
 					<Route path="/student/add/new/log" element={<AddLog />} />
 					<Route path="/student/view-log" element={<ViewLog />} />
+
+					{/* COORDINATOR ROUTES */}
 					<Route
 						path="/coordinator/view-student-supervisor/evaluation"
 						element={<ViewStdSupeEvaluation />}
 					/>
 					<Route
-						path="/supervisor/view-student-coordinator/evaluation"
-						element={<ViewStdCoodEvaluation />}
+						path="/coordinator/announcements"
+						element={<Announcements />}
+					/>
+					<Route
+						path="/coordinator/view-all-students"
+						element={<ViewAllStudents />}
+					/>
+					<Route
+						path="/coordinator/view-student-profile"
+						element={<ViewStudentProfile />}
+					/>
+
+					<Route
+						path="/coordinator/view-all-supervisors"
+						element={<ViewSupervisors />}
 					/>
 					<Route
 						path="/coordinator/view-student-logbook"
@@ -77,6 +108,10 @@ function App() {
 						element={<ViewSingleLog />}
 					/>
 					<Route
+						path="/coordinator/view-all-internships"
+						element={<ViewAllInternships />}
+					/>
+					<Route
 						path="/coordinator/view-internship"
 						element={<ViewOngoingInternship />}
 					/>
@@ -89,28 +124,38 @@ function App() {
 						element={<CoodProfile />}
 					/>
 					<Route
+						path="/coordinator/view/internship/application"
+						element={<ViewStuApplication />}
+					/>
+					<Route
+						path="/coordinator/dashboard"
+						element={<CoordinatorDash />}
+					/>
+					<Route
+						path="/coordinator/createsupervisor"
+						element={<SupervisorAccount />}
+					/>
+					<Route
+						path="/coordinator/settings"
+						element={<Settings />}
+					/>
+
+					{/* SUPERVISOR ROUTES */}
+					<Route
+						path="/supervisor/signup"
+						element={<StaffSignup />}
+					/>
+					<Route
+						path="/supervisor/view-student-coordinator/evaluation"
+						element={<ViewStdCoodEvaluation />}
+					/>
+					<Route
 						path="/supervisor/student/assessment"
 						element={<SupeStdEvaluation />}
 					/>
 					<Route
 						path="/supervisor/profile"
 						element={<SupervisorProfile />}
-					/>
-					<Route
-						path="/student/announcements"
-						element={<StudAnnouncements />}
-					/>
-					<Route
-						path="/student/internships/"
-						element={<Internships />}
-					/>
-					<Route
-						path="/student/internship/application-form"
-						element={<StuApplicationForm />}
-					/>
-					<Route
-						path="/coordinator/view/internship/application"
-						element={<ViewStuApplication />}
 					/>
 				</Routes>
 			</Router>

@@ -4,6 +4,7 @@ import Navbar from '../../../components/ELEMENTS/Nav/Navbar';
 import SideBar from '../../../components/ELEMENTS/Nav/SideBar';
 import Header from '../../../components/ELEMENTS/Header/Header';
 import { useTranslation } from 'react-i18next';
+import CoodSidebar from '../../../components/ELEMENTS/Nav/CoodSidebar';
 
 const ViewSingleLog = () => {
 
@@ -12,7 +13,7 @@ const ViewSingleLog = () => {
   return (
     <>
         <Navbar />
-        <SideBar />
+        <CoodSidebar />
         <main className={styles.main}>
             <Header 
                 text={t('nav.stu') + t('sidebar.logbook')}
@@ -39,8 +40,6 @@ const ViewSingleLog = () => {
                     <div className={styles.rightDiv}></div>
                 </div>
             </div>
-           
-    
         </main>
     </>
   )

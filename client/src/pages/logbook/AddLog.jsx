@@ -4,6 +4,7 @@ import Navbar from '../../components/ELEMENTS/Nav/Navbar';
 import SideBar from '../../components/ELEMENTS/Nav/SideBar';
 import Header from '../../components/ELEMENTS/Header/Header';
 import { useTranslation } from 'react-i18next';
+import CoodSidebar from '../../components/ELEMENTS/Nav/CoodSidebar';
 
 const AddLog = () => {
 

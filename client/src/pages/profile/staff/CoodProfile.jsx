@@ -8,6 +8,7 @@ import HeaderTwo from '../../../components/ELEMENTS/Header/HeaderTwo';
 import Image from '../../../components/ELEMENTS/Image/Image';
 import { LuTrash } from "react-icons/lu";
 import Paragraph from '../../../components/ELEMENTS/Paragraph/Paragraph';
+import CoodSidebar from '../../../components/ELEMENTS/Nav/CoodSidebar';
 
 const CoodProfile = () => {
 
@@ -41,7 +42,7 @@ const CoodProfile = () => {
   return (
     <>
         <Navbar />
-        <SideBar />
+        <CoodSidebar />
         <div className={styles.profileCont}>
             <div className={styles.profile}>
                 <Header

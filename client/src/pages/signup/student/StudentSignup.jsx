@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styles from './styles.module.css'
 import Image from '../../../components/ELEMENTS/Image/Image'
-import Button from '../../../components/ELEMENTS/Button/Button'
 import HeaderTwo from '../../../components/ELEMENTS/Header/HeaderTwo'
 import Paragraph from '../../../components/ELEMENTS/Paragraph/Paragraph'
 import { Link } from 'react-router-dom'
@@ -15,8 +14,11 @@ const StudentSignup = () => {
         password: '',
         stdNo: '',
         confPwd: '',
+        otp: ''
     })
+    // console.log(user)
     const [passwordMatch, setPasswordMatch] = useState(true);
+    const [signupSuccesfull, setSignupSuccesfull] = useState(false)
 
     // handle form fields change
     const handleChange = (e) => {
@@ -28,16 +30,44 @@ const StudentSignup = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(user.password === user.confPwd){
-            alert('Signup Successful')
+            setPasswordMatch(true);
+            setSignupSuccesfull(true);
+            submitOTP();
+            fetch("http://localhost:3000/v1/auth/signup", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(user),
+				})
+					.then((response) => {
+						console.log("Form Data Sent!", response);
+					})
+					.catch((error) => {
+						console.error(error.response.data);
+					});
+            // alert('Signup Successful');
         } else {
-            alert('Password does not match')
             setPasswordMatch(prev => !prev)
         } 
     }
 
+    // FUNTION TO HANDLE OTP SUBMIT
+    const submitOTP = () => {
+        let url = `http://localhost:3000/v1/auth/send-code`
+        fetch(url,{
+            method: "POST",
+            headers:{ "Content-type": "application/json" },
+            body: JSON.stringify({email : user.email, otp: user.otp})
+        }).then((res) => {
+            console.log('OTP Sent! ' + JSON.stringify(res));
+        }).catch((e) => {
+            console.log(e);
+        })
+    }
+
     // const signupSuccessful = (bool) => {
     //     bool ? <SignupSuccess /> : <></>
-    // }
+    // } http://localhost:3000/v1/auth/signup
+
   return (
     <main className={styles.main}>
         <section>
@@ -72,6 +102,21 @@ const StudentSignup = () => {
                 <label htmlFor={'confPwd'}>Confirm Password:</label>
                 <input type={'password'} name={'confPwd'} value={user.confPwd} onChange={handleChange} placeholder={'Confirm Password'} className={styles.inp} />
                 { !passwordMatch && <Paragraph text={'*Passwords do not match'} fontSize={'12px'} fontWeight={'400'} color={'#ff1a2f'} margin={'0 0.5rem'} /> }
+
+                {
+                    signupSuccesfull &&
+                    <>
+                        <label htmlFor={'lname'}>One-Time Password:</label>
+                        <input 
+                            type={'text'} 
+                            name={'otp'} 
+                            value={user.otp} 
+                            onChange={e => setUser({...user, otp:e.target.value})} 
+                            placeholder={'Enter OTP'} 
+                            className={styles.inp} />
+                    </>
+                    
+                }
 
                 <input type='submit' value={'Sign up'} onClick={handleSubmit} onKeyDown={handleSubmit} className={styles.btn} />
             </form>

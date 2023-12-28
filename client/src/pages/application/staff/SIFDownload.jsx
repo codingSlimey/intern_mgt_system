@@ -9,7 +9,7 @@ const SIFDownload = () => {
     const [t, i18n] = useTranslation('global');
 
     const main = {
-        height: '20vh',
+        height: '25vh',
         width: '95%',
         margin: '1rem 1.3rem', 
         padding: '0.5rem',
@@ -27,6 +27,9 @@ const SIFDownload = () => {
     }
 
     const btn = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         border: 'none',
         fontSize: '18px',
         color: '#003679',
@@ -59,7 +62,8 @@ const SIFDownload = () => {
                         marginRight: '0.5rem', 
                         fontSize: '20px',
                         color: '#003679'
-                }}/>
+                    }}
+                />
                 {t('application.insurDownload')}
             </button>
         </div>

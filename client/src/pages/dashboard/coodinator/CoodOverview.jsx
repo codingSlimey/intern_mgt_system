@@ -2,11 +2,11 @@ import React from 'react'
 import styles from './styles.module.css'
 import supervisors from './supervisors.js'
 import Navbar from '../../../components/ELEMENTS/Nav/Navbar'
-import SideBar from '../../../components/ELEMENTS/Nav/SideBar'
 import HeaderTwo from '../../../components/ELEMENTS/Header/HeaderTwo'
 import Header from '../../../components/ELEMENTS/Header/Header'
 import { Link } from 'react-router-dom'
 import ApplicationsTable from './ApplicationsTable.jsx'
+import CoodSidebar from '../../../components/ELEMENTS/Nav/CoodSidebar.jsx'
 
 export default function CoodOverview() {
 
@@ -24,7 +24,7 @@ export default function CoodOverview() {
   return (
     <>
         <Navbar />
-        <SideBar />
+        <CoodSidebar />
         <div className={styles.overview}>
             <Header 
                 text={'Overview'}

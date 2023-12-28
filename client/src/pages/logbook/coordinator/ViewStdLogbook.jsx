@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { BsArrowRight } from "react-icons/bs";
 import Log from '../Log'
 import { Link } from 'react-router-dom'
+import CoodSidebar from '../../../components/ELEMENTS/Nav/CoodSidebar'
 
 export default function ViewStdLogbook() {
 
@@ -15,7 +16,7 @@ export default function ViewStdLogbook() {
   return (
     <>
         <Navbar />
-        <SideBar />
+        <CoodSidebar />
         <section className={styles.main}>
             <Header 
                 text={t('nav.stu') + ' ' + t('sidebar.logbook')}

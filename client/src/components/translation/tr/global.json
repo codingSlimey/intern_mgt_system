@@ -24,7 +24,9 @@
         "message" : "Seyir Defteri Girişleri",
         "typeWelcome" : "Bir hesap türü seçin.",
         "form" : "Formu",
-        "info" : "Bilgi"
+        "info" : "Bilgi",
+        "new" : "Yeni",
+        "add" : "Eklemek"
     }, 
     "calendar" : {
         "cal" : "Takvim",
@@ -94,6 +96,8 @@
         "done" : "Tamam"
     },
     "profile" : {
+        "prof" : "Profili",
+        "about" : "Hakkinda",
         "name" : "İsim",
         "fname" : "İsim",
         "lname" : "Soyisim",
@@ -101,7 +105,7 @@
         "email" : "Email",
         "stdNo" : "Öğrenci Numarasi",
         "saveBtn" : "Bilgileri Güncelle",
-        "edit" : "Profili Düzenle",
+        "edit" : " Düzenle",
         "success" : "Kullanici Profili başariyla güncellendi",
         "imgWarning" : "Büyük resimler otomatik olarak yeniden boyutlandirilabilir. Maksimum yükleme boyutu 1 MB'tir"
     },
@@ -122,11 +126,22 @@
     "internships" : {
         "apply" : "Uygula",
         "intInfo" : "Staj Bilgileri",
+        "avail" : "Mevcut Stajlar",
+        "ong" : "Devam Eden Stajlar",
+        "compl" : "Tamamlanan Stajlar",
+        "start" : "Başlangiç",
+        "end" : "Bitirmek",
         "company" : "Şirket",
+        "country" : "Ülke",
+        "city" : "Şehir",
         "role" : "Rol",
+        "year" : "Yil",
+        "dur" : "Süre",
         "desc" : "Tanim",
         "field" : "Çalişma Alani",
-        "pos" : "Konum"
+        "pos" : "Konum",
+        "stat" : "Durum",
+        "actInt" : "Aktif Stajyer"
     },
     "eval" : {
         "eval" : "Değerlendirme",

@@ -24,7 +24,9 @@
         "message" : "Logbook Entries",
         "typeWelcome" : "Select account type",
         "form" : "Form",
-        "info" : "Information"
+        "info" : "Information",
+        "new" : "New",
+        "add" : "Add"
     }, 
     "calendar" : {
         "cal" : "Calendar",
@@ -95,12 +97,14 @@
         "done" : "Done"
     },
     "profile" : {
+        "prof" : "Profile",
+        "about" : "About",
         "name" : "Name",
         "fname" : "First Name",
         "lname" : "Last Name",
         "companyName" : "Company Name",
         "email" : "Email",
-        "stdNo" : "Student Number",
+        "stdNo" : "Student No",
         "saveBtn" : "Update Information",
         "edit" : "Edit Profile",
         "success" : "Profile updated successfully",
@@ -123,11 +127,22 @@
     "internships" : {
         "apply" : "Apply",
         "intInfo" : "Internship Information",
+        "avail" : "Available Internships",
+        "ong" : "Ongoing Internships",
+        "compl" : "Completed Internships",
+        "start" : "Start",
+        "end" : "End",
         "company" : "Company",
+        "country" : "Country",
+        "city" : "City",
         "role" : "Role",
+        "year" : "Year",
+        "dur" : "Duration",
         "desc" : "Description",
         "field" : "Working Field",
-        "pos" : "Position"
+        "pos" : "Position",
+        "stat" : "Status",
+        "actInt" : "Active Intern"
     },
     "eval" : {
         "eval" : "Assessment",

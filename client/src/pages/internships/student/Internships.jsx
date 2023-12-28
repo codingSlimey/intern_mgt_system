@@ -5,8 +5,11 @@ import SideBar from '../../../components/ELEMENTS/Nav/SideBar';
 import Header from '../../../components/ELEMENTS/Header/Header';
 import HeaderTwo from '../../../components/ELEMENTS/Header/HeaderTwo';
 import Internship from './Internship';
+import { useTranslation } from 'react-i18next';
 
 const Internships = () => {
+
+    const [t, i18n] = useTranslation('global');
 
     const internships = [
         {
@@ -50,7 +53,7 @@ const Internships = () => {
         <SideBar />
         <div className={styles.main}>
             <Header 
-                text={'Available Internships'}
+                text={t('internships.avail')}
                 fontSize={'26px'}
                 color={'#003679'}
                 width={'100%'}
@@ -65,7 +68,7 @@ const Internships = () => {
                 <Internship />
             </div>
             <HeaderTwo 
-                text={'Completed Internships'}
+                text={t('internships.compl')}
                 fontSize={'26px'}
                 color={'#000'}
                 width={'100%'}
@@ -75,11 +78,11 @@ const Internships = () => {
                 <table>
                     <thead>
                         <tr>
-                        <th>Name of the Company</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th>Working Field</th>
-                        <th>Year</th>
+                            <th>{t('profile.companyName')}</th>
+                            <th>{t('internhips.country')}</th>
+                            <th>{t('internhips.city')}</th>
+                            <th>{t('internhips.field')}</th>
+                            <th>{t('internships.year')}</th>
                         </tr>
                     </thead>
                     <tbody>

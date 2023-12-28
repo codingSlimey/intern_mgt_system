@@ -134,3 +134,37 @@
     margin: 0.5rem 1rem;
     background-color: #fff;
 }
+
+
+/* VIEW ALL INTERNSHIPS */
+.availCont > table {
+    border: 0px;
+    width: 85%;
+    margin-left: 1.5rem;
+    border-collapse: collapse;
+}
+
+.availCont > table > thead > tr > th  {
+    border: none;
+    color: #fff;
+    padding: 0.5rem;
+    text-align: left;
+    background-color: #003976;
+}
+
+.availCont > table > tbody > tr {
+    cursor: pointer;
+}
+
+.availCont > table > tbody > tr:hover {
+    background-color: #000;
+}
+
+td {
+    font-size: 16px;
+    font-weight: 450;
+    border: none;
+    padding: 0.4rem;
+    color: #101110BF;
+    background-color: #D9E1EA;
+}

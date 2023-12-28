@@ -6,6 +6,7 @@ import SideBar from '../../../components/ELEMENTS/Nav/SideBar';
 import Header from '../../../components/ELEMENTS/Header/Header';
 import { useTranslation } from 'react-i18next';
 import HeaderTwo from '../../../components/ELEMENTS/Header/HeaderTwo';
+import CoodSidebar from '../../../components/ELEMENTS/Nav/CoodSidebar';
 
 const ViewStdSupeEvaluation = () => {
 
@@ -44,7 +45,7 @@ const ViewStdSupeEvaluation = () => {
   return (
     <>
         <Navbar />
-        <SideBar />
+        <CoodSidebar />
         <section className={styles.main}>
             <Header 
                 text={t('eval.supe')}

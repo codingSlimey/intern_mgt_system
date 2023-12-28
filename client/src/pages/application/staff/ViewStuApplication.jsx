@@ -1,12 +1,10 @@
 import React from 'react';
 import styles from './styles.module.css';
-import SideBar from '../../../components/ELEMENTS/Nav/SideBar';
 import Navbar from '../../../components/ELEMENTS/Nav/Navbar';
 import Header from '../../../components/ELEMENTS/Header/Header';
-import HeaderTwo from '../../../components/ELEMENTS/Header/HeaderTwo';
 import { useTranslation } from 'react-i18next';
-import Image from '../../../components/ELEMENTS/Image/Image';
 import SIFDownload from './SIFDownload';
+import CoodSidebar from '../../../components/ELEMENTS/Nav/CoodSidebar';
 
 const ViewStuApplication = () => {
 
@@ -15,7 +13,7 @@ const ViewStuApplication = () => {
   return (
     <>
         <Navbar />
-        <SideBar />
+        <CoodSidebar />
         <section className={styles.main}>
             <Header 
                 text={t('application.view')}
