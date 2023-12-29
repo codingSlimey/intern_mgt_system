@@ -14,6 +14,7 @@ import SupervisorProfile from "./pages/profile/staff/SupervisorProfile";
 import CoordinatorDash from "./pages/dashboard/COORDINATOR/CoordinatorDash";
 import SupervisorAccount from "./pages/dashboard/SUPERVISORACCOUNT/SupervisorAccount";
 import Settings from "./pages/settings/settings";
+import AnnouncementPage from "./pages/announcement/Announcements";
 
 function App() {
 	return (
@@ -63,6 +64,7 @@ function App() {
 						path="/coordinator/settings"
 						element={<Settings />}
 					/>
+					<Route path="/announcements" element={<AnnouncementPage />} />
 				</Routes>
 			</Router>
 		</>
