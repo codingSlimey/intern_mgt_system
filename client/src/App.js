@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import StudentLogin from "./pages/login/student/StudentLogin";
 import StaffLogin from "./pages/login/staff/StaffLogin";
 import StudentDash from "./pages/dashboard/student/StudentDash";
@@ -29,8 +31,8 @@ import Settings from "./pages/settings/settings";
 import ViewAllInternships from "./pages/internships/coordinator/ViewAllInternships";
 import ViewAllStudents from "./pages/students/ViewAllStudents";
 import ViewSupervisors from "./pages/supervisors/ViewSupervisors";
-import Announcements from "./pages/announcements/coordinator/Announcements";
 import ViewStudentProfile from "./pages/students/ViewStudentProfile";
+import CoodAnnouncements from "./pages/announcements/coordinator/CoodAnnouncements";
 
 function App() {
 	return (
@@ -80,7 +82,7 @@ function App() {
 					/>
 					<Route
 						path="/coordinator/announcements"
-						element={<Announcements />}
+						element={<CoodAnnouncements />}
 					/>
 					<Route
 						path="/coordinator/view-all-students"
@@ -159,6 +161,7 @@ function App() {
 					/>
 				</Routes>
 			</Router>
+			<ToastContainer />
 		</>
 	);
 }

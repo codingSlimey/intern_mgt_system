@@ -35,7 +35,7 @@ const CoodSidebar = () => {
             margin={"2rem auto 1rem auto"}
         />
         <div className='navDiv'>
-            <Link to={'/coodinator/overview'} className={styles.link}><BiSolidDashboard style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.home")}</Link>
+            <Link to={'/coordinator/dashboard'} className={styles.link}><BiSolidDashboard style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.home")}</Link>
             <Link to={'/coordinator/profile'} className={styles.link}><FaRegUser style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.prof")}</Link>
             <Link to={'/coordinator/view-all-internships'} className={styles.link}><FaChalkboardTeacher style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.internships")}</Link>
             <Link to={'/coordinator/view-all-students'} className={styles.link}><PiStudentBold style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("nav.stu") + 's'}</Link>

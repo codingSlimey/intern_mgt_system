@@ -48,7 +48,7 @@ const ViewSupervisors = () => {
               {displaySupervisors}
             </tbody>
           </table>
-          <Link className={styles.addSupe}>{`${t('main.add')} ${t('nav.supe')}`}</Link>
+          <Link to={'/coordinator/createsupervisor'} className={styles.addSupe}>{`${t('main.add')} ${t('nav.supe')}`}</Link>
 
         </section>
     </>

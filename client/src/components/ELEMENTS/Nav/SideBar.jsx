@@ -10,6 +10,7 @@ import { BiSolidDashboard } from 'react-icons/bi'
 import { MdInsertChartOutlined } from 'react-icons/md'
 import { useTranslation } from 'react-i18next'
 import { IoIosLogOut } from "react-icons/io";
+import { PiSpeakerHighDuotone } from "react-icons/pi"
 import HeaderTwo from '../Header/HeaderTwo'
 
 const SideBar = () => {
@@ -37,9 +38,9 @@ const SideBar = () => {
             <Link to={'/student/profile'} className={styles.link}><FaRegUser style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.prof")}</Link>
             <Link to={'/student/internships'} className={styles.link}><FaChalkboardTeacher style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.internships")}</Link>
             <Link to={'/student/logbook'} className={styles.link}><TbNotes style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.logbook")}</Link>
-            <Link className={styles.link}><TbNotes style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.docs")}</Link>
+            <Link to={'/student/announcements'} className={styles.link}><PiSpeakerHighDuotone style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("announcements.title")}</Link>
             <Link className={styles.link}><MdInsertChartOutlined style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.reports")}</Link>
-            <Link className={styles.link}><CiSettings style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.settings")}</Link>
+            <Link to={''} className={styles.link}><CiSettings style={{fontSize: '22px', marginRight: '0.5rem'}} /> {t("sidebar.settings")}</Link>
         </div>
         <button className={styles.logout} onClick={handleLogout}>
           <IoIosLogOut style={{fontSize: '22px', fontWeight: '800', marginRight: '5px', color: '#003976'}} />
