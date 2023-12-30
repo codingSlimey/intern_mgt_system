@@ -37,7 +37,6 @@ export class CompanyRepository {
             data: {
                 description: createCompnayDto.description,
                 email: createCompnayDto.email,
-                logo: createCompnayDto.logo,
                 postalAddr: createCompnayDto.postalAddr,
                 telephoneNumber: createCompnayDto.telephoneNumber,
                 webAddr: createCompnayDto.webAddr,
@@ -54,7 +53,6 @@ export class CompanyRepository {
             create: {
                 description: updateCompanyDto.description,
                 email: updateCompanyDto.email,
-                logo: updateCompanyDto.logo,
                 postalAddr: updateCompanyDto.postalAddr,
                 telephoneNumber: updateCompanyDto.telephoneNumber,
                 webAddr: updateCompanyDto.webAddr,

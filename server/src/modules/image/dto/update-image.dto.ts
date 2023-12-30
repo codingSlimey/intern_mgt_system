@@ -1,6 +1,6 @@
 import { IsString } from "class-validator";
 
-export class UploadResumeDto {
+export class UpdateImageDto {
     @IsString()
     name: string;
 }

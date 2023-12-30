@@ -7,11 +7,15 @@ import { StudentModule } from '../student/student.module';
 import { SuperviserModule } from '../superviser/superviser.module';
 import { CoordinatorModule } from '../coordinator/coordinator.module';
 import { ApplicationModule } from '../application/application.module';
+import { ApplicationService } from '../application/application.service';
+import { ApplicationRepository } from '../application/application.repository';
+import { PrismaService } from '../prisma/prisma.service';
+import { S3ManagerService } from '../s3-manager/s3-manager.service';
 
 @Module({
-  imports: [StudentModule, SuperviserModule, CoordinatorModule, ApplicationModule, S3ManagerModule],
-  providers: [ImageService, ImageRepository],
-  controllers: [ImageController]
+  imports: [S3ManagerModule],
+  providers: [ PrismaService, S3ManagerService, ImageRepository, ImageService],
+  controllers: [ImageController],
 })
 export class ImageModule {}
 

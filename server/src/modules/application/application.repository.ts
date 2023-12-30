@@ -23,7 +23,7 @@ export class ApplicationRepository {
         });
     }
 
-    async findApplicationsByCoordinatorId(coordinatorId: number){
+    async findApplicationsByCoordinatorId(coordinatorId: number): Promise<Application[]>{
         return await this.prismaService.application.findMany({
             where: {
                 student: {
@@ -38,7 +38,7 @@ export class ApplicationRepository {
                 insurance: true,
                 resume: true,
                 student:true,
-            }
+            },
         });
     }
 

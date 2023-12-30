@@ -37,7 +37,7 @@ export class S3ManagerController {
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(
         @Param('bucketName') bucketName: string,
-        @UploadedFile() file: File,
+        @UploadedFile() file: Express.Multer.File,
     ): Promise<any> {
         return await this.s3.uploadFile(bucketName, file);
     }

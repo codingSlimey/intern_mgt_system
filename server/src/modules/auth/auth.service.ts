@@ -21,9 +21,9 @@ import { AuthRepository } from './auth.repository';
 import { OtpService } from './otp.service';
 import { MailService } from '../mail/mail.service';
 import { TokenExpiredError } from 'jsonwebtoken';
-import { Department, Verification } from '@prisma/client';
 import { CoordinatorRepository } from '../coordinator/coordinator.repository';
 import { SuperviserRepository } from '../superviser/superviser.repository';
+import { S3ManagerService } from '../s3-manager/s3-manager.service';
 
 @Injectable()
 export class AuthService {
@@ -35,40 +35,45 @@ export class AuthService {
     private readonly authRepository: AuthRepository,
     private readonly otp: OtpService,
     private readonly mailService: MailService,
+    private readonly s3: S3ManagerService,
   ) {}
 
-  async login(userType: UserType, loginUser: LoginDto) {
+  async login(loginUser: LoginDto) {
     
-    let user;
+    const student = await this.studentRepository.find(loginUser.email);
+    const coordinator = await this.coordinatorRepository.find(loginUser.email);
+    const superviser = await this.superviserRepository.find(loginUser.email);
+    let userType;
 
-    if (userType == UserType.Student){
-      user = await this.studentRepository.find(loginUser.email);
+    if (student){
+      userType = UserType.Student;
     }
-    else if (userType == UserType.Coordinator){
-      user = await this.coordinatorRepository.find(loginUser.email);
+    else if (coordinator){
+      userType = UserType.Student;
     }
-    else if (userType == UserType.Superviser){
-      user = await this.superviserRepository.find(loginUser.email);
+    else if (superviser){
+      userType = UserType.Superviser;
     }
     else {
-      throw new BadRequestException('Invalid user type');
+      throw new BadRequestException('invalid user type');
     }
-    if (!user) {
-      throw new BadRequestException('Email does not exist');
+    if (!student && !coordinator && !superviser) {
+      throw new BadRequestException('email does not exist');
     }
+    const user = (student || coordinator || superviser); 
     const isPasswordValid = await Hash.compare(
       loginUser.password,
       user.hashedPassword,
     );
 
     if (!isPasswordValid) {
-      throw new BadRequestException('Credentials invalid');
+      throw new BadRequestException('credentials invalid');
     }
     const userData = {
       sub: user.id,
       role: user.role,
       email: user.email,
-      type: userType
+      userType: userType,
     } 
     
     return await this.getTokens(userData);
@@ -125,14 +130,18 @@ export class AuthService {
     const superviser = await this.superviserRepository.findById(userId);
 
     let user;
+    let userType: UserType;
     if (student) {
       user = student;
+      userType = UserType.Student;
     } 
     else if (coordinator) {
       user = coordinator;
+      userType = UserType.Coordinator;
     }
     else if (superviser) {
       user = superviser;
+      userType = UserType.Superviser;
     }
     else {
       throw new BadRequestException('Invalid user type');
@@ -146,6 +155,7 @@ export class AuthService {
       sub: user.id,
       role: user.role,
       email: user.email,
+      userType: userType
     });
   }
 
@@ -172,7 +182,27 @@ export class AuthService {
   }
 
   async updatePassword(password: string, id: number, token: string) {
-    const user = await this.studentRepository.findById(id);
+    const student = await this.studentRepository.findById(id);
+    const coordinator = await this.coordinatorRepository.findById(id);
+    const superviser = await this.superviserRepository.findById(id);
+
+    let user;
+    let userType: UserType;
+    if (student) {
+      user = student;
+      userType = UserType.Student;
+    } 
+    else if (coordinator) {
+      user = coordinator;
+      userType = UserType.Coordinator;
+    }
+    else if (superviser) {
+      user = superviser;
+      userType = UserType.Superviser;
+    }
+    else {
+      throw new BadRequestException('Invalid user type');
+    }
     
     if (!user) {
       throw new BadRequestException('user not found');
@@ -184,7 +214,15 @@ export class AuthService {
       await this.jwtService.verify(token, { secret: secret });
       const hashedPassword = await Hash.hash(password);
 
-      await this.studentRepository.updatePassword(id, hashedPassword);
+      if (userType == UserType.Student) {
+        await this.studentRepository.updatePassword(id, hashedPassword);
+      }
+      else if (userType == UserType.Coordinator) {
+        await this.coordinatorRepository.updatePassword(id, hashedPassword);
+      }
+      else {
+        await this.superviserRepository.updatePassword(id, hashedPassword);
+      }
 
       return { success: true };
     } catch (error) {
@@ -199,11 +237,32 @@ export class AuthService {
   }
 
   async validateResetPasswordToken(id: number, token: string) {
-    const user = await this.studentRepository.findById(id);
+    const student = await this.studentRepository.findById(id);
+    const coordinator = await this.coordinatorRepository.findById(id);
+    const superviser = await this.superviserRepository.findById(id);
 
+    let user;
+    let userType: UserType;
+    if (student) {
+      user = student;
+      userType = UserType.Student;
+    } 
+    else if (coordinator) {
+      user = coordinator;
+      userType = UserType.Coordinator;
+    }
+    else if (superviser) {
+      user = superviser;
+      userType = UserType.Superviser;
+    }
+    else {
+      throw new BadRequestException('Invalid user type');
+    }
+    
     if (!user) {
       throw new BadRequestException('user not found');
     }
+
     const secret = process.env.SECRET_KEY + user.hashedPassword;
 
     try {
@@ -236,11 +295,32 @@ export class AuthService {
   }
 
   async generateUniqueLink(email: string) {
-    let user;
-    user = await this.studentRepository.find(email);
-    user = await this.coordinatorRepository.find(email);
-    user = await this.superviserRepository.find(email);
 
+    const student = await this.studentRepository.find(email);
+    const coordinator = await this.coordinatorRepository.find(email);
+    const superviser = await this.superviserRepository.find(email);
+
+    let user;
+    let userType: UserType;
+    if (student) {
+      user = student;
+      userType = UserType.Student;
+    } 
+    else if (coordinator) {
+      user = coordinator;
+      userType = UserType.Coordinator;
+    }
+    else if (superviser) {
+      user = superviser;
+      userType = UserType.Superviser;
+    }
+    else {
+      throw new BadRequestException('Invalid user type');
+    }
+    
+    if (!user) {
+      throw new BadRequestException('user not found');
+    }
 
     if(!user) {
       throw new BadRequestException('user not found');
@@ -249,6 +329,7 @@ export class AuthService {
         sub: user.id,
         role: user.role,
         email: user.email,
+        userType: userType
       };
     const secret = process.env.SECRET_KEY + user.hashedPassword;
       
@@ -276,18 +357,18 @@ export class AuthService {
     return true;
   }
 
-  async signUp(signUPDto: SuperviserSignUpDto | CoordinatorSignUpDto | StudentSignUpDto): Promise<Tokens> {
+  async signUp(signUPDto: SuperviserSignUpDto | CoordinatorSignUpDto | StudentSignUpDto, file: Express.Multer.File): Promise<Tokens> {
     const isEmailVerified = await this.validateVerifications(signUPDto.email, signUPDto.otp);
     if (!isEmailVerified) {
        throw new UnauthorizedException('email is not verified')
     } 
     const res = await this.validateEmailForSignUp(signUPDto.userType, signUPDto.email);
-    const hashedPassword = await Hash.hash(signUPDto.password);
-
     if (!res) throw new UnauthorizedException('Email is not validated yet');
+    const hashedPassword = await Hash.hash(signUPDto.password);
     
     let user;
-
+    let userType: UserType;
+    
     if (signUPDto.userType == UserType.Student) {
       const studentSignUpDto = signUPDto as StudentSignUpDto;
       user = await this.studentRepository.create({
@@ -299,35 +380,71 @@ export class AuthService {
         hashedPassword: hashedPassword,
         // role: signUPDto.role,
       });
+      userType = UserType.Student;
     }
     else if (signUPDto.userType == UserType.Coordinator) {
-      const studentSignUpDto = signUPDto as CoordinatorSignUpDto;
+      const coordinatorSignUpDto = signUPDto as CoordinatorSignUpDto;
       user = await this.coordinatorRepository.create({
+        email: coordinatorSignUpDto.email,
+        phone: coordinatorSignUpDto.phone,
+        departmentId: coordinatorSignUpDto.departmentId,
+        firstname: coordinatorSignUpDto.firstname,
+        lastname: coordinatorSignUpDto.lastname,
+        hashedPassword: hashedPassword,
+      });
+      userType = UserType.Coordinator;
+    }
+    else {
+      const superviserSignUpDto = signUPDto as SuperviserSignUpDto;
+      user = await this.superviserRepository.create({
+        email: superviserSignUpDto.email,
+        phone: superviserSignUpDto.phone,
+        position: superviserSignUpDto.position,
+        companyId: superviserSignUpDto.companyId,
+        firstname: superviserSignUpDto.firstname,
+        lastname: superviserSignUpDto.lastname,
+        hashedPassword: hashedPassword,
+      });
+      userType = UserType.Superviser;
+    }
+    
+    await this.s3.uploadFile("images", file);
+
+    return await this.getTokens({
+      sub: user.id,
+      role: user.role,
+      email: user.email,
+      userType: userType
+    });
+  }
+  async signUpCoordinator(signUPDto: CoordinatorSignUpDto, file: Express.Multer.File): Promise<Tokens> {
+    const isEmailVerified = await this.validateVerifications(signUPDto.email, signUPDto.otp);
+    if (!isEmailVerified) {
+       throw new UnauthorizedException('email is not verified')
+    } 
+    const res = await this.validateEmailForSignUp(signUPDto.userType, signUPDto.email);
+    if (!res) throw new UnauthorizedException('Email is not validated yet');
+
+    const hashedPassword = await Hash.hash(signUPDto.password);
+    
+    
+    const studentSignUpDto = signUPDto as CoordinatorSignUpDto;
+    const user = await this.coordinatorRepository.create({
         email: studentSignUpDto.email,
         phone: studentSignUpDto.phone,
         departmentId: studentSignUpDto.departmentId,
         firstname: studentSignUpDto.firstname,
         lastname: studentSignUpDto.lastname,
         hashedPassword: hashedPassword,
-      });
-    }
-    else {
-      const studentSignUpDto = signUPDto as SuperviserSignUpDto;
-      user = await this.superviserRepository.create({
-        email: studentSignUpDto.email,
-        phone: studentSignUpDto.phone,
-        position: studentSignUpDto.position,
-        companyId: studentSignUpDto.companyId,
-        firstname: studentSignUpDto.firstname,
-        lastname: studentSignUpDto.lastname,
-        hashedPassword: hashedPassword,
-      });
-    }
+    });
+
+    await this.s3.uploadFile("images", file);
 
     return await this.getTokens({
       sub: user.id,
       role: user.role,
       email: user.email,
+      userType: UserType.Coordinator
     });
   }
 }

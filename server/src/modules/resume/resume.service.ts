@@ -18,14 +18,9 @@ import { ApplicationService } from '../application/application.service';
 export class ResumeService {
     constructor(
       private readonly fileRepository: ResumeRepository,
-      private readonly applicationService: ApplicationService,
       private readonly s3: S3ManagerService,
     ) {}
     async saveFile(applicationId: number, file: File, uploadFileDto: UploadResumeDto) {
-      const subject = await this.applicationService.findApplicationById(applicationId);
-      if (!subject) {
-        throw new BadRequestException('application id not valid!');
-      }
   
       if (!this.isValidType(file.mimetype))
         throw new HttpException(
@@ -39,7 +34,7 @@ export class ResumeService {
       const saveToStorage = await this.s3.uploadFile('resumes', file);
   
       await this.fileRepository.saveFile(
-        subject.id,
+        applicationId,
         saveToStorage.key,
         fileType,
         size,
@@ -102,12 +97,17 @@ export class ResumeService {
     }
     async findByIdOrThrowExpection(
       fileId: number,
-    ): Promise<FileModel | undefined> {
-      const file = await this.fileRepository.findById(fileId);
-      if (!file || !file.isVerified) {
+    ): Promise<any | undefined> {
+      const fileData = await this.fileRepository.findById(fileId);
+      if (!fileData || !fileData.isVerified) {
         throw new BadRequestException("file not found");
       }
-      return file;
+      const file = await this.s3.getFile("resumes", fileData.name);
+
+      return {
+        ...fileData,
+        file: file.Body as Buffer,
+      };
     }
   
   }

@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, SetMetadata, UseGuards, } from '@nestjs/common';
 import { DepartmentService } from './department.service';
 import { CreateDto } from './dto/department.dto';
 import { Roles } from 'src/common/decorators';
-import { Role } from '../auth/types';
+import { Role, UserType } from '../auth/types';
 import { Coordinator, Department } from '@prisma/client';
+import { UserTypeGuard } from '../auth/guards/user-type.guard';
+import { AtGuard } from '../auth/guards/at.guard';
 
 @Controller('department')
 export class DepartmentController {
@@ -22,6 +24,8 @@ export class DepartmentController {
     }
 
     @Get('coordinators')
+    @UseGuards(AtGuard, UserTypeGuard)
+    @SetMetadata('userType', UserType.Coordinator)
     @HttpCode(HttpStatus.OK)
     async getSupervisors(@Body('departmentId', ParseIntPipe) departmentId: number): Promise<Coordinator[]> {
         return await this.departmentService.findCoordinators(departmentId);
@@ -29,6 +33,8 @@ export class DepartmentController {
 
     @Post('create-department')//---------------------------------update-needed------------------
     @HttpCode(HttpStatus.CREATED)
+    @UseGuards(AtGuard, UserTypeGuard)
+    @SetMetadata('userType', UserType.Coordinator)
     // @Roles(Role.Admin)
     async createDepartment(@Body() createDepartmentDto: CreateDto): Promise<Department> {
         return await this.departmentService.createDepartment(createDepartmentDto);
@@ -36,6 +42,8 @@ export class DepartmentController {
 
     @Patch('update-department')
     @HttpCode(HttpStatus.OK)
+    @UseGuards(AtGuard, UserTypeGuard)
+    @SetMetadata('userType', UserType.Coordinator)
     // @Roles(Role.Admin)
     async updateDepartment(@Param('departmentId', ParseIntPipe) departmentId: number,
                         @Body() updateDepartmentDto: Partial<Department>): Promise<Department> {
@@ -44,6 +52,8 @@ export class DepartmentController {
 
     @Delete('delete-department')
     @HttpCode(HttpStatus.NO_CONTENT)
+    @UseGuards(AtGuard, UserTypeGuard)
+    @SetMetadata('userType', UserType.Coordinator)
     // @Roles(Role.Admin)
     async deleteDepartment(@Param('departmentId', ParseIntPipe) departmentId: number): Promise<boolean> {
         return await this.departmentService.deleteDepartment(departmentId);

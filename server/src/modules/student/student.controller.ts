@@ -6,8 +6,13 @@ import {
     HttpCode,
     ParseIntPipe,
     Param,
+    UseGuards,
+    SetMetadata,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
+import { AtGuard } from '../auth/guards/at.guard';
+import { UserTypeGuard } from '../auth/guards/user-type.guard';
+import { UserType } from '../auth/types';
 
 @Controller('student')
 export class StudentController {
@@ -24,13 +29,16 @@ export class StudentController {
         return "hello folks";
     }
     @Get('all')
-    // @UseGuards(AuthGuard('passport-local'))
+    @UseGuards(AtGuard, UserTypeGuard)
+    @SetMetadata('userType', UserType.Coordinator)
     @HttpCode(HttpStatus.OK)
     async findAll() {
       return await this.studentService.findAll();
     }
   
     @Get(':id')
+    @UseGuards(AtGuard, UserTypeGuard)
+    @SetMetadata('userType', UserType.Coordinator)
     @HttpCode(HttpStatus.OK)
     async findOne(@Param('id', ParseIntPipe) id:number) {
       const result = await this.studentService.findOne(id);

@@ -16,7 +16,9 @@ export class S3ManagerService {
 
     this.s3 = new AWS.S3();
   }
-  
+  async getFile(bucket: string, key: string) {
+    return await this.s3.getObject({ Bucket: bucket, Key: key}).promise();
+  }
 
   async listBuckets() {
     const listBuckets = await this.s3.listBuckets().promise();
