@@ -16,7 +16,7 @@ export class CoordinatorRepository {
     return await this.prismaService.coordinator.findFirst({ where: { email: email }, include: {user: true} }) ;
   }
 
-  async findAll(): Promise<any[]> {
+  async findAll(): Promise<any[] | undefined> {
     return await this.prismaService.coordinator.findMany({include: {user: true}});
   }
 

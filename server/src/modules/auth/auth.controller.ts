@@ -11,6 +11,8 @@ import {
   Param,
   ParseIntPipe,
   UseInterceptors,
+  UploadedFile,
+  SetMetadata,
 } from '@nestjs/common';
 import { RtGuard } from './guards/rt.guard';
 import { AuthService } from './auth.service';
@@ -35,6 +37,9 @@ import {
 import { ValidateOtpDto } from './dtos/validate-otp.dto';
 import { GetCurrentUserId } from '../../common/decorators/'
 import { TokenInterceptor } from '../../common/interceptors/token.interceptor';
+import { UserTypeGuard } from './guards/user-type.guard';
+import { AtGuard } from './guards/at.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 
 @Controller('auth')
@@ -61,11 +66,15 @@ export class AuthController {
 
   @Public()
   @Post('signup')
+  @UseGuards(UserTypeGuard)
+  @SetMetadata('userType', UserType.Coordinator)
+  @UseInterceptors(FileInterceptor('file'))
   async signup(
     @Body() signUpDto: StudentSignUpDto|CoordinatorSignUpDto|SuperviserSignUpDto,
     @Res({ passthrough: true }) res: Response,
+    @UploadedFile() file: Express.Multer.File,
     ) {
-    const tokens = await this.authService.signUp(signUpDto);
+    const tokens = await this.authService.signUp(signUpDto, file);
     this.setCookie(res, 'access_token', tokens.accessToken, this.atExp);
     this.setCookie(res, 'refresh_token', tokens.refreshToken, this.rtExp);
     return { success: true };
@@ -80,6 +89,7 @@ export class AuthController {
       name: user.name,
       email: user.email,
       role: user.role,
+      userType: user.userType,
     };
   }
   
@@ -87,7 +97,7 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Param('userType') userType: UserType, @Body() loginDto: LoginDto, @Req() req: Request, @Res() res: Response) {
-    const tokens = await this.authService.login(userType, loginDto);
+    const tokens = await this.authService.login(loginDto);
     
     this.setCookie(res, 'access_token', tokens.accessToken, this.atExp);
     this.setCookie(res, 'refresh_token', tokens.refreshToken, this.rtExp);
@@ -156,11 +166,27 @@ export class AuthController {
 
   @Public()
   @Post('reset-password/:id/:token')
-  async RestPassword(
+  async restPassword(
     @Param('id', ParseIntPipe) id: number,
     @Param('token') token: string,
     @Body() body: ResetPasswordtDto,
   ) {
     return await this.authService.updatePassword(body.password, id, token);
   }
+
+  @Public()
+  @Post('signup-coordinator-init')
+  @UseInterceptors(FileInterceptor('file'))
+  async signUpCoordinatorInit(
+    @Body() signUpDto: CoordinatorSignUpDto,
+    @Res({ passthrough: true }) res: Response,
+    @UploadedFile() file: Express.Multer.File,  
+    ) {
+    const tokens = await this.authService.signUpCoordinator(signUpDto, file);
+    this.setCookie(res, 'access_token', tokens.accessToken, this.atExp);
+    this.setCookie(res, 'refresh_token', tokens.refreshToken, this.rtExp);
+    return { success: true };
+  }
+
 }
+

@@ -12,6 +12,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { MailModule } from '../mail/mail.module';
 import { CoordinatorRepository } from '../coordinator/coordinator.repository';
 import { SuperviserRepository } from '../superviser/superviser.repository';
+import { S3ManagerService } from '../s3-manager/s3-manager.service';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { SuperviserRepository } from '../superviser/superviser.repository';
     OtpService,
     JwtService,
     PrismaService,
+    S3ManagerService
   ],
   exports: [StudentRepository, PrismaService],
 })

@@ -2,21 +2,36 @@ import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { CoordinatorRepository } from './coordinator.repository';
 import { AssessmentCriteriaDto } from './dto/assessment.dto';
+import { ImageService } from '../image/image.service';
 
 @Injectable()
 export class CoordinatorService {
-  constructor(private readonly coordinatorRepository: CoordinatorRepository) {}
+  constructor(private readonly coordinatorRepository: CoordinatorRepository, private readonly imageService: ImageService) {}
 
   async create(user) {
     return await this.coordinatorRepository.upsert(user);
   }
 
   async findAll() {
-    return await this.coordinatorRepository.findAll();
+    const coordinators = await this.coordinatorRepository.findAll();
+
+    const coordinatorsWithImage = coordinators.map(async (coordinator) => {
+      const image = await this.imageService.findByIdOrThrowExpection(coordinator.id);
+      return {
+        ...coordinator,
+        image: {...image},
+      };
+    });
+    return coordinators;
   }
 
   async findOne(id: number) {
-    return await this.coordinatorRepository.findUnique(id);
+    const coordinator =  await this.coordinatorRepository.findUnique(id);
+    const image = await this.imageService.findByIdOrThrowExpection(coordinator.id);
+    return {
+      ...coordinator,
+      image: {...image},
+    };
   }
   async getAllDepartments(){
     return await this.coordinatorRepository.getAllDepartments();

@@ -24,7 +24,7 @@ export class CoordinatorController {
     @HttpCode(HttpStatus.OK)
     async findOne(@Param('id', ParseIntPipe) id:number) {
       const result = await this.coordinatorService.findOne(id);
-      return JSON.stringify(result)
+      return JSON.stringify(result);
     }
     
     /*
