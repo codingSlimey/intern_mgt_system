@@ -141,7 +141,8 @@
         "field" : "Çalişma Alani",
         "pos" : "Konum",
         "stat" : "Durum",
-        "actInt" : "Aktif Stajyer"
+        "actInt" : "Aktif Stajyer",
+        "noData" : "Bu kullanici hesabi için önceki staj verileri mevcut değil"
     },
     "eval" : {
         "eval" : "Değerlendirme",

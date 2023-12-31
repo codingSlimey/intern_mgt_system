@@ -29,10 +29,10 @@ const Internship = () => {
         </div>
         <Paragraph 
             text={'A description of the internship details and requirements goes here..'}
-            fontSize={'14px'}
-            fontWeight={'400'}
-            width={'90%'}
+            fontSize={'15px'}
+            width={'95%'}
             color={'#fff'}
+            margin={'0.25rem 0 0.25rem 0.25rem'}
         />
         <Link to={"/student/internship/application-form"} className={styles.btn}>{t('internships.apply')}</Link>
     </div>

@@ -142,7 +142,8 @@
         "field" : "Working Field",
         "pos" : "Position",
         "stat" : "Status",
-        "actInt" : "Active Intern"
+        "actInt" : "Active Intern",
+        "noData" : "No previous internship data available for this user account"
     },
     "eval" : {
         "eval" : "Assessment",

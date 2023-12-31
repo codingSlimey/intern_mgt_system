@@ -18,8 +18,8 @@ const Logbook = () => {
         <SideBar />
         <section className={styles.logbook}>
             <div className={styles.header}>
-                <Link to={'/student/add/new/log'} className={styles.addLogBtn}><FiEdit3 style={{marginRight: '0.2rem'}} /> {t('logbook.add')}</Link>
-                <button className={styles.downloadBtn}>{t('logbook.download')} <MdOutlineFileDownload /></button>
+                <Link to={'/student/add/new/log'} className={styles.addLogBtn}><FiEdit3 style={{marginRight: '0.3rem'}} /> {t('logbook.add')}</Link>
+                <button className={styles.downloadBtn}><MdOutlineFileDownload style={{marginRight: '0.3rem', fontSize: '20px'}}  /> {t('logbook.download')}</button>
             </div>
             <main className={styles.main}>
                 <Log to={"/student/view-log"} />

@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  backend:
+    build:
+    container_name: nestjs_api 
+    environment:
+      - DATABASE_URL=postgresql://fahad:slime123@localhost:5432/eims?schema=public
+      - MAIL_HOST=smtp.gmail.com
+      - MAIL_PORT=465
+      - NODE_ENV=development
+      - MAIL_USER=hmsdevelopment83@gmail.com
+      - MAIL_PASSWORD="aftg tael rhol hbea"
+      - SECRET_KEY=wfjkn345evlf12wegmvoerodk234
+      - ACCESS_KEY_ID=
+      - SECRET_ACCESS_KEY=Oeddf476a815949bd99g
+    ports:
+      - '3000:3000'
+    depends_on:
+      - database
+    networks:
+      - nestjs_network
+
+  database:
+    image: postgres 
+    container_name: postgresql_db 
+    ports:
+      - 5432:5432 
+    volumes:
+      - "./postgresql-backup:/data/db" 
+    networks:
+      - nestjs_network
+
+networks:
+  nestjs_network:
+driver: bridge

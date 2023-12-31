@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './styles.module.css'
 import Navbar from '../../../components/ELEMENTS/Nav/Navbar';
 import SideBar from '../../../components/ELEMENTS/Nav/SideBar';
@@ -6,10 +6,12 @@ import Header from '../../../components/ELEMENTS/Header/Header';
 import HeaderTwo from '../../../components/ELEMENTS/Header/HeaderTwo';
 import Internship from './Internship';
 import { useTranslation } from 'react-i18next';
+import Paragraph from '../../../components/ELEMENTS/Paragraph/Paragraph';
 
 const Internships = () => {
 
     const [t, i18n] = useTranslation('global');
+    const [noInt, setNoInt] = useState(true);
 
     const internships = [
         {
@@ -57,7 +59,7 @@ const Internships = () => {
                 fontSize={'26px'}
                 color={'#003679'}
                 width={'100%'}
-                margin={'1.5rem 1.5rem'}
+                margin={'1.5rem 2.5rem'}
             />
             <div className={styles.mainCont}>
                 <Internship />
@@ -70,24 +72,32 @@ const Internships = () => {
             <HeaderTwo 
                 text={t('internships.compl')}
                 fontSize={'26px'}
-                color={'#000'}
+                color={'#003679'}
                 width={'100%'}
-                margin={'1.5rem 1.5rem'}
+                margin={'1.5rem 2.5rem'}
             />
             <div className={styles.completed}>
                 <table>
                     <thead>
                         <tr>
                             <th>{t('profile.companyName')}</th>
-                            <th>{t('internhips.country')}</th>
-                            <th>{t('internhips.city')}</th>
-                            <th>{t('internhips.field')}</th>
+                            <th>{t('internships.country')}</th>
+                            <th>{t('internships.city')}</th>
+                            <th>{t('internships.field')}</th>
                             <th>{t('internships.year')}</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {showCompletedInternships}
-                    </tbody>
+                    { noInt ? 
+                        <Paragraph 
+                            text={t('internships.noData')}
+                            fontSize='18px'
+                            fontWeight={'600'}
+                            margin={'2rem 0'}
+                        /> :
+                        <tbody>
+                            {showCompletedInternships}
+                        </tbody>
+                    }
                 </table>
             </div>
         </div>

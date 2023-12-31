@@ -8,6 +8,7 @@
     left: 20%;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding: 2rem 0;
     /* outline: 1px solid red; */
 }
 
@@ -25,8 +26,8 @@
 .addLogBtn {
     font-size: 16px;
     font-weight: 600;
-    height: 35px;
-    width: 100px;
+    height: 45px;
+    min-width: 140px;
     border: none;
     border-radius: 18px;
     padding: 0.25rem 1rem;
@@ -40,10 +41,13 @@
 }
 
 .downloadBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 16px;
     font-weight: 600;
-    height: 40px;
-    width: 220px;
+    height: 45px;
+    min-width: 240px;
     border: none;
     border-radius: 18px;
     padding: 0.5rem 1.5rem;
@@ -69,6 +73,7 @@
     height: auto;
     min-height: 70vh;
     padding: 0.5rem auto;
+    margin: 2rem 0;
     /* outline: 1px solid red; */
 }
 

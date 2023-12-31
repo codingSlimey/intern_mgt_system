@@ -3,6 +3,7 @@ import styles from "../student/styles.module.css";
 import Header from "../../../components/ELEMENTS/Header/Header";
 import CoordinatorLayout from "../../../layout/coordinator/layout";
 import ReusableTable from "../../../components/ELEMENTS/Table/Table";
+import Calendar from "../../../components/CONTAINERS/Calendar/Calendar";
 
 const CoordinatorDash = () => {
   const tableData = [
@@ -85,7 +86,9 @@ const CoordinatorDash = () => {
           <ReusableTable data={tableData} columns={tableColumns} />
         </div>
         <div className="col-span-5 lg:col-span-2">
-          <section className={styles.calendar}></section>
+          <section className={styles.calendar}>
+            <Calendar />
+          </section>
         </div>
         <div className="col-span-5">
           <Header
