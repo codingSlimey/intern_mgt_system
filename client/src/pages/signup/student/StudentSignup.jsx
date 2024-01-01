@@ -29,6 +29,14 @@ const StudentSignup = () => {
     // FUNCTION TO HANDLE FORM SUBMIT
     const handleSubmit = (event) => {
         event.preventDefault();
+        if (
+            user.fname === '' || 
+            user.lname  === '' || 
+            user.email === '' || 
+            user.password  === '' ||
+            user.stdNo === '') {
+                alert('please fill all form fields');
+        }
         if(user.password === user.confPwd){
             setPasswordMatch(true);
             setSignupSuccesfull(true);
@@ -53,7 +61,7 @@ const StudentSignup = () => {
     // FUNTION TO HANDLE OTP SUBMIT
     const submitOTP = () => {
         let url = `http://localhost:3000/v1/auth/send-code`
-        fetch(url,{
+        fetch(url, {
             method: "POST",
             headers:{ "Content-type": "application/json" },
             body: JSON.stringify({email : user.email, otp: user.otp})
